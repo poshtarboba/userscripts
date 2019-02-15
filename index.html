@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>userscripts</title>
+	<meta charset="utf-8">
+	<style>
+		body {
+			padding: 10px 20px;
+			color: #333;
+			font: normal 18px/28px Helvetica, Arial, sans-serif;
+		}
+		section {
+			padding: 20px 0;
+		}
+		code, pre {
+			display: block;
+			margin: 10px 0 20px;
+			padding: 16px 20px;
+			font-family: monospace;
+			background: #ffe;
+			border: 2px dashed #eeb;
+			-moz-tab-size: 2;
+			tab-size: 2;
+		}
+	</style>
+</head>
+<body>
+
+	<section>
+		<h1>Юзер-стилі, юзер-скрипти</h1>
+		<p>Юзер-стилі та юзер-скрипти дозволяють оформити будь-який сайт за вашим смаком, змінити стилі, добавити скрипти, видаляти непотрібні блоки і т.д. В цілому - покращити зручність використання сайтів.</p>
+		<p>Для використання юзер-стилів вам потрібно встановити в браузер плагін <strong>Stylus</strong>, для юзер-скриптів - <strong>TamperMonkey</strong>.</p>
+		<p>Цю сторінку я створив для себе, іноді плагіни падають, обнуляють код, вінду чи браузер треба переставити, розвернути на іншому компі, то щоб мати базу скриптів та стилів. Можливо, в майбутньому буде онлайн-синхронізація.</p>
+		<p>Стосовно юзер-скриптів: плагіном треба загрузити головний js-файл, він сам буде підтягувати інші js-файли відповідно до поточної URL.</p>
+	</section>
+
+	<h2>Юзер-стилі</h2>
+
+	<section id="ucss_minecraft_wiki">
+		<h3>Minecraft Wiki</h3>
+		<p>Відключаємо тормознутий блок.<p>
+		<pre>
+minecraft-ru.gamepedia.com
+
+#content #siderail {
+	display: none !important;
+}</pre>
+	</section>
+	
+	<section id="css_imgsrc">
+		<h3>Ховер для imgsrc</h3>
+		<p>Для зручності на великих екранах.<p>
+		<pre>
+imgsrc.ru
+
+#st-2 { display: none !important; }
+h1 + p > table > tbody > tr:hover > td { background: #b9c2c5; }</pre>
+	</section>
+
+	<section id="css_e621">
+		<h3>Картинку на весь екран в e621</h3>
+		<p>Щоб не було всіляких скролів.<p>
+		<pre>
+e621.net
+
+#image { position: relative; top: -82px; width: auto !important; max-width: calc(99vw - 285px); max-height: 99vh;}</pre>
+	</section>
+
+	<section id="css_chan">
+		<h3>Картинку на весь екран в чані</h3>
+		<p>Щоб не було всіляких скролів. Ну і рекламу всяку повиключати.<p>
+		<pre>
+.+chan.sankakucomplex.com/post/.+
+
+#pending-notice,
+#resized_notice,
+#header,
+#news-ticker,
+.status-notice { display: none; }
+#post-content { padding-top: 0 !important; }
+#image { padding-top: 2px; max-height: 99vh; }</pre>
+	</section>
+	
+	<!--
+	<section id="">
+		<h3></h3>
+		<p><p>
+		<pre>
+		</pre>
+	</section>
+	-->
+
+	<h2>Юзер-скрипти</h2>
+	
+	<section>
+		<h3>Головний скрипт</h3>
+		<pre>
+// ==UserScript==
+// @name         main
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        http*://*/*
+// @grant        none
+// @require      https://poshtarboba.github.io/userscripts/main.js?2
+// ==/UserScript==
+
+(function() {
+    'use strict';
+
+    // Your code here...
+})();</pre>
+		<p>Підтягує скрипти для наступних сайтів:</p>
+		<ul>
+			<li>imgsrc.ru</li>
+			<li>9gag.com</li>
+			<li>e621.net</li>
+			<li>chan.sankakucomplex.com</li>
+			<li>jpg4.info</li>
+		</ul>
+	</section>
+	
+	<section>
+		<h3>Скрипти, які не працюють з гітхаба, їх треба ставити локально</h3>
+		<p><a href="local.imgsrc.ru.js">local.imgsrc.ru.js</a> (треба прописати пароль)</p>
+		<p><a href="local.jpg4.info.js">local.jpg4.info.js</a></p>
+		<p>Далі деякий архів старих скриптів, можуть вже не працювати.</p>
+	</section>
+	
+	<section>
+		<h3>Автолайкер для Youtube</h3>
+		<p>Хочеться віддячувати авторам відео на Youtube хоча-б лайками, але ліньки щоразу скролити сторінку вниз, жмакати той лайк...</p>
+		<p>Тепер всі відео, які я дивлюся - лайкаються автоматично (а ті відео, що мені не подобаються, я не дивлюся, ну, чи можна встигнути швиденько дізлайкнути).</p>
+		<pre>
+// ==UserScript==
+// @name         YouTube Autoliker
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://www.youtube.com/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+	'use strict';
+	function randomTime(){ return Math.round(Math.random()*10000) + 10000; }
+	setTimeout(autoLike, randomTime());
+	function autoLike(){
+		let button = document.querySelector('ytd-toggle-button-renderer a');
+		let isLikeActive = button.parentElement.classList.contains('style-default-active');
+		let idParent = button.parentElement.getAttribute('id');
+		if (button && !isLikeActive && idParent !== 'notification-button') {
+			button.dispatchEvent(new Event('click'));
+		}
+		setTimeout(autoLike, randomTime());
+	}
+})();</pre>
+	</section>
+	
+	<section id="js_github">
+		<h3>Кнопка Network на GitHub</h3>
+		<p>З конжим новим редизайном гітхаб все далі і далі ховає кнопку Network. Я вирішив повернути її в те місце, де вона була колись давно-давно, на кожну сторінку проекта.</p>
+		<pre>
+// ==UserScript==
+// @name         GitHub
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        http*://github.com/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+	'use strict';
+	addNetworkButton();
+	setInterval(addNetworkButton, 1000);
+	function addNetworkButton(){
+		var nav = document.querySelector('.reponav');
+		var btn = document.querySelector('.network-button');
+		if (btn) {
+			if (document.baseURI.substr(-8) === '/network') {
+				nav.querySelectorAll('.selected').forEach(function(item){ item.classList.remove('selected'); });
+				btn.classList.add('selected');
+			}
+			return;
+		}
+		if (nav) {
+			var href = nav.querySelector('a[data-selected-links^="repo_wiki"]').getAttribute('href').replace('wiki', 'network');
+			var a = document.createElement('a');
+			a.setAttribute('href', href);
+			a.classList.add('reponav-item', 'network-button');
+			a.innerText = "Network";
+			nav.appendChild(a);
+		}
+	}
+})();</pre>
+	</section>
+	
+	<section id="js_e621">
+		<h3>Video autoplay для e621</h3>
+		<p>Не вистачало автоматичного програвання відео на e621.<p>
+		<pre>
+// ==UserScript==
+// @name         e621
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://e621.net/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+	'use strict';
+	document.querySelectorAll('video').forEach(function(video){
+		video.src = video.querySelector('source').src;
+		video.autoplay = true;
+	});
+})();</pre>
+	</section>
+
+	<section id="js_dosgames">
+		<h3>Classicreload DOS Games fix</h3>
+		<p>Сайт задовбує алертами. Хай виводить свої повідомлення в консоль.<p>
+		<p>Встанови в налаштуваннях <strong>Запускати при: document-start</strong> про всякий випадок.</p>
+		<pre>
+// ==UserScript==
+// @name         classicreload DOS Games
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://classicreload.com/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+	'use strict';
+	window.alert = window.console.log;
+})();</pre>
+	</section>
+
+	<section id="js_chan">
+		<h3>Антиадблокер для чана</h3>
+		<p>Цей сайт задовбує попередженнями про адблок. Зробіть нормальну рекламу, то і не буде адблока. А то по 20 айфреймів тулите, воно кожну сторінку грузить по хвилині, ще й всю пам'ять вижирає.</p>
+		<p>Хитруни, використовують eval. Та на тих хитрунів свої хитрощі знайдемо.</p>
+		<p>Також добавляє контроли для відео.</p>
+		<p>Встанови в налаштуваннях <strong>Запускати при: document-body</strong> про всякий випадок.</p>
+		<pre>
+// ==UserScript==
+// @name         chan-ad
+// @namespace    http://tampermonkey.net/
+// @version      0.1
+// @description  try to take over the world!
+// @author       You
+// @match        https://chan.sankakucomplex.com/*
+// @grant        none
+// ==/UserScript==
+
+(function() {
+	'use strict';
+	window.eval = function(){ console.log('run eval'); }
+	setTimeout(function(){
+		document.querySelectorAll('video').forEach(function(e){
+			e.controls = true;
+		});
+	}, 3000);
+})();</pre>
+	</section>
+
+</body>
+</html>
