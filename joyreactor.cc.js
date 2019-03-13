@@ -21,7 +21,6 @@ if (jQuery) {
 		$rating.find('.c-vote-plus, .c-vote-minus').on('click', vote);
 	});
 	function vote(){
-		console.log('aaa');
 		let $btn = $(this);
 		let span = $btn.parents('.comment_rating');
 		let commentId = span.attr('comment_id');
