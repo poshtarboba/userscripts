@@ -16,6 +16,7 @@
 	if (location.host === 'e621.net') addScript('e621.net.js');
 	if (location.host === 'chan.sankakucomplex.com') addScript('chan.sankakucomplex.com.js'); // не хоче загружатися, загружай вручну
 	if (location.host.indexOf('jpg4.info') > -1) addScript('jpg4.info.js');
+	if (location.host.indexOf('reactor.cc') > -1) addScript('joyreactor.cc.js');
 	
 	function addScript(fileName){
 		let script = window.fxCreateTag('script');
