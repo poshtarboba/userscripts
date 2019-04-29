@@ -133,7 +133,7 @@
 			btn.style.display = 'none';
 			th.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
 				let a = td.firstElementChild;
-				if (a) a.classList.add('waiting-for-thumbs');
+				if (a && a.tagName === 'A') a.classList.add('waiting-for-thumbs');
 			});
 			loadNextThumbs();
 		};
@@ -143,7 +143,6 @@
 		let a = document.querySelector('.waiting-for-thumbs');
 		if (!a) return;
 		a.classList.remove('waiting-for-thumbs');
-		console.log('1.', a.href, a);
 		let xhr = xhrCreate(a.href, function (){
 			let content = getBody(xhr);
 			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);
@@ -153,7 +152,6 @@
 				let btn = div.querySelector('input[value="Continue to album"]');
 				if (!btn) btn = div.querySelector('input[value="Продолжить просмотр"]');
 				if (btn) {
-					console.log('2.', btn.parentElement.action);
 					let xhr2 = xhrCreate(btn.parentElement.action, function (){
 						let content2 = getBody(xhr2);
 						if (content2.length !== 2) console.warn('Error parsing page, xhr:', xhr2);
