@@ -7,6 +7,7 @@
 
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 	function rndTimeTh(){ return Math.floor(Math.random() * 3000) + 1500; }
+	function getBody(xhr){ return xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/); }
 
 	function xhrCreate(url, fn){
 		let xhr = new XMLHttpRequest();
@@ -53,7 +54,9 @@
 		infoText.innerHTML = 'Preparing: <span id="infoText">1</span> / ' + (href.length + 1);
 		document.body.insertBefore(infoText, document.body.firstElementChild);
 		let style = document.createElement('style');
-		style.innerHTML = 'body { text-align: center; } img[alt="###"] { display: inline-block; margin-bottom: 12px; }';
+		let styleHtml = 'body { background-color: #000; text-align: center; }\n';
+		styleHtml += 'img[alt="###"] { display: inline-block; margin-bottom: 12px; }';
+		style.innerHTML = styleHtml;
 		document.head.appendChild(style);
 		let html = '<p id="pInfo">Loading images: ';
 		html += '<span id="curInfo"></span> / <span id="allInfo"></span></p>\n';
@@ -73,7 +76,7 @@
 		let infoText = document.getElementById('infoText');
 		infoText.innerText = +infoText.innerText + 1;
 		let xhr = xhrCreate(href.shift(), function (){
-			let content = xhr.responseText.match(/<body>([\s\S]*)<\/body>/);
+			let content = getBody(xhr);
 			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);
 			else {
 				let div = document.createElement('div');
@@ -134,7 +137,7 @@
 		if (!a) return;
 		a.classList.remove('waiting-for-thumbs');
 		let xhr = xhrCreate(a.href, function (){
-			let content = xhr.responseText.match(/<body>([\s\S]*)<\/body>/);
+			let content = getBody(xhr);
 			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);
 			else {
 				let div = document.createElement('div');
@@ -143,7 +146,7 @@
 				if (!btn) btn = div.querySelector('input[value="Продолжить просмотр"]');
 				if (btn) {
 					let xhr2 = xhrCreate(btn.parentElement.action, function (){
-						let content2 = xhr2.responseText.match(/<body>([\s\S]*)<\/body>/);
+						let content2 = getBody(xhr);
 						if (content2.length !== 2) console.warn('Error parsing page, xhr:', xhr2);
 						else prepareThumbs(a, content2[1]);
 					});
