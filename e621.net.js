@@ -111,7 +111,7 @@
 	function itapeLoadNextListPages(nextListPages, linksArr){
 		if (nextListPages.length === 0) {
 			document.getElementById('itiCur').innerText = '0';
-			document.getElementById('itiType').innerText = 'image&nbsp;pages';
+			document.getElementById('itiType').innerHTML = 'image&nbsp;pages';
 			document.getElementById('itiTotal').innerText = linksArr.length;
 			let html = '<div id="itape">\n<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
 			itapeLoadPages(linksArr, html);
