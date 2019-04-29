@@ -54,7 +54,7 @@
 		infoText.innerHTML = 'Preparing: <span id="infoText">1</span> / ' + (href.length + 1);
 		document.body.insertBefore(infoText, document.body.firstElementChild);
 		let style = document.createElement('style');
-		let styleHtml = 'body { background-color: #000; text-align: center; }\n';
+		let styleHtml = 'body { color: #fff; background-color: #000; text-align: center; }\n';
 		styleHtml += 'img[alt="###"] { display: inline-block; margin-bottom: 12px; }';
 		style.innerHTML = styleHtml;
 		document.head.appendChild(style);
