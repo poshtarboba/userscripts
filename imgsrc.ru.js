@@ -143,7 +143,7 @@
 		let a = document.querySelector('.waiting-for-thumbs');
 		if (!a) return;
 		a.classList.remove('waiting-for-thumbs');
-		console.log('1.', a.href);
+		console.log('1.', a.href, a);
 		let xhr = xhrCreate(a.href, function (){
 			let content = getBody(xhr);
 			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);

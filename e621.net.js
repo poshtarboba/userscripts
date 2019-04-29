@@ -104,7 +104,9 @@
 	function itapeClearClick(){
 		document.head.querySelectorAll('link, script').forEach(function(tag){ tag.remove(); });
 		document.title = 'e621 - ' + document.title.replace(' - e621', '').replace('/', '');
-		document.head.querySelector('style').innerHTML += '\nbody { color: #fff; background-color: #000; }\n';
+		let styleHtml = '\nhtml, body { scroll-behavior: smooth; }\n';
+		styleHtml += 'body { color: #fff; background-color: #000; }\n';
+		document.head.querySelector('style').innerHTML += styleHtml;
 		document.body.innerHTML = document.getElementById('itape').outerHTML;
 		addImagesNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
 	}
