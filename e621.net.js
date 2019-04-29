@@ -114,7 +114,8 @@
 			document.getElementById('itiCur').innerText = '0';
 			document.getElementById('itiType').innerHTML = 'image&nbsp;pages';
 			document.getElementById('itiTotal').innerText = linksArr.length;
-			let html = '<div id="itape">\n<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
+			let html = '<div id="itape">\n<p>Keys A, Q for navigation, W - for change view</p>\n';
+			html += '<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
 			itapeLoadPages(linksArr, html);
 			return;
 		}

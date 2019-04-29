@@ -62,7 +62,8 @@
 		styleHtml += '#itape #fullHgh:checked ~ img { max-height: none; }\n';
 		style.innerHTML = styleHtml;
 		document.head.appendChild(style);
-		let html = '<div id="itape">\n<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
+		let html = '<div id="itape">\n<p>Keys A, Q for navigation, W - for change view</p>\n';
+		html += '<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
 		html += '<p id="pInfo">Loading images: ';
 		html += '<span id="curInfo"></span> / <span id="allInfo"></span></p>\n';
 		document.querySelectorAll('img.big').forEach(function(img) { html += imgHTMLCode(img); });
