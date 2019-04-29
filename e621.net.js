@@ -27,7 +27,7 @@
 		html += '#itape #fullHgh:checked ~ img { max-height: none; }\n';
 		html += '.itape-btns span { color: #b4c7d9; cursor: pointer; }\n';
 		html += '.itape-btns span:hover { color: #2e76b4; }\n';
-		html += '.itape-btns i { font-style: normal; }\n.itape-btns b { padding-left: 16px; }';
+		html += '.itape-btns i { font-style: normal; }\n.itape-btns b { padding-left: 16px; }\n';
 		style.innerHTML = html;
 		document.head.appendChild(style);
 	}
@@ -104,8 +104,9 @@
 	function itapeClearClick(){
 		document.head.querySelectorAll('link, script').forEach(function(tag){ tag.remove(); });
 		document.title = 'e621 - ' + document.title.replace(' - e621', '').replace('/', '');
-		document.head.querySelector('style').innerHTML += '\nbody { color: #fff; background-color: #000; }';
+		document.head.querySelector('style').innerHTML += '\nbody { color: #fff; background-color: #000; }\n';
 		document.body.innerHTML = document.getElementById('itape').outerHTML;
+		addImagesNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
 	}
 
 	function itapeLoadNextListPages(nextListPages, linksArr){
@@ -168,6 +169,33 @@
 			img.setAttribute('src', img.dataset.src);
 			delete img.dataset.src;
 		}, rndTime());
+	}
+
+	function addImagesNavKeys(){
+		window.addEventListener('keydown', function (e){
+			if (e.keyCode === 81) pressedNavKey('q'); // нажали q
+			if (e.keyCode === 65) pressedNavKey('a'); // нажали a
+			if (e.keyCode === 87) pressedWkey();
+		});
+		function pressedWkey(){
+			let input = document.getElementById('fullHgh');
+			if (input) input.checked = !input.checked;
+		}
+		function pressedNavKey(key){
+			if (document.images.length < 1) return;
+			let halfScreen = window.innerHeight / 2;
+			let centerPos = halfScreen + window.scrollY;
+			let imgCenters = [];
+			for (let i = 0; i < document.images.length; i++) imgCenters.push(Math.abs(centerPos - imgCenter(document.images[i])));
+			let min = 0;
+			for (let i = 1; i < imgCenters.length; i++) if (imgCenters[i] < imgCenters[min]) min = i;
+			let next = min + (key === 'q' ? -1 : 1);
+			if (next < 0) next = 0;
+			if (next > imgCenters.length - 1) next = imgCenters.length - 1;
+			let yPos = imgCenter(document.images[next]) - halfScreen;
+			window.scroll(0, yPos);
+		}
+		function imgCenter(img){ return img.clientHeight / 2 + img.offsetTop; }
 	}
 
 })();

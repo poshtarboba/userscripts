@@ -54,11 +54,16 @@
 		infoText.innerHTML = 'Preparing: <span id="infoText">1</span> / ' + (href.length + 1);
 		document.body.insertBefore(infoText, document.body.firstElementChild);
 		let style = document.createElement('style');
-		let styleHtml = 'body { color: #fff; background-color: #000; text-align: center; }\n';
-		styleHtml += 'img[alt="###"] { display: inline-block; margin-bottom: 12px; }';
+		let styleHtml = '\nhtml, body { scroll-behavior: smooth; }\n';
+		styleHtml += 'body { color: #fff; background-color: #000; text-align: center; }\n';
+		styleHtml += 'img[alt="###"] { display: inline-block; margin-bottom: 12px; }\n';
+		styleHtml += '#itape { text-align:center; }\n';
+		styleHtml += '#itape img { display: inline-block; margin-bottom: 20px; max-width: 100%; max-height: 98vh; }\n';
+		styleHtml += '#itape #fullHgh:checked ~ img { max-height: none; }\n';
 		style.innerHTML = styleHtml;
 		document.head.appendChild(style);
-		let html = '<p id="pInfo">Loading images: ';
+		let html = '<div id="itape">\n<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
+		html += '<p id="pInfo">Loading images: ';
 		html += '<span id="curInfo"></span> / <span id="allInfo"></span></p>\n';
 		document.querySelectorAll('img.big').forEach(function(img) { html += imgHTMLCode(img); });
 		getImagesPage(href, html);
@@ -67,8 +72,9 @@
 	function getImagesPage(href, html) {
 		if (href.length === 0) {
 			clearHeader();
-			document.body.innerHTML = html;
+			document.body.innerHTML = html + '</div>';
 			document.getElementById('allInfo').innerText = document.querySelectorAll('img').length;
+			addImagesNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
 			loadNextImage();
 			return;
 		}
@@ -171,6 +177,33 @@
 		if (html.length < 10) html += '-----';
 		let td = a.parentElement;
 		td.innerHTML += html;
+	}
+
+	function addImagesNavKeys(){
+		window.addEventListener('keydown', function (e){
+			if (e.keyCode === 81) pressedNavKey('q'); // нажали q
+			if (e.keyCode === 65) pressedNavKey('a'); // нажали a
+			if (e.keyCode === 87) pressedWkey();
+		});
+		function pressedWkey(){
+			let input = document.getElementById('fullHgh');
+			if (input) input.checked = !input.checked;
+		}
+		function pressedNavKey(key){
+			if (document.images.length < 1) return;
+			let halfScreen = window.innerHeight / 2;
+			let centerPos = halfScreen + window.scrollY;
+			let imgCenters = [];
+			for (let i = 0; i < document.images.length; i++) imgCenters.push(Math.abs(centerPos - imgCenter(document.images[i])));
+			let min = 0;
+			for (let i = 1; i < imgCenters.length; i++) if (imgCenters[i] < imgCenters[min]) min = i;
+			let next = min + (key === 'q' ? -1 : 1);
+			if (next < 0) next = 0;
+			if (next > imgCenters.length - 1) next = imgCenters.length - 1;
+			let yPos = imgCenter(document.images[next]) - halfScreen;
+			window.scroll(0, yPos);
+		}
+		function imgCenter(img){ return img.clientHeight / 2 + img.offsetTop; }
 	}
 
 })();
