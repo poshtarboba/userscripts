@@ -145,11 +145,10 @@
 				let btn = div.querySelector('input[value="Continue to album"]');
 				if (!btn) btn = div.querySelector('input[value="Продолжить просмотр"]');
 				if (btn) {
-					console.log('xhr2');
 					let xhr2 = xhrCreate(btn.parentElement.action, function (){
-						let content2 = getBody(xhr);
+						let content2 = getBody(xhr2);
 						if (content2.length !== 2) console.warn('Error parsing page, xhr:', xhr2);
-						else prepareThumbs(a, content2[1], 1);
+						else prepareThumbs(a, content2[1]);
 					});
 					xhr2.send();
 				} else prepareThumbs(a, content[1]);
@@ -159,8 +158,7 @@
 		setTimeout(function (){ xhr.send(); }, rndTimeTh());
 	}
 
-	function prepareThumbs(a, content, m){
-		if (m) console.log(content);
+	function prepareThumbs(a, content){
 		let div = document.createElement('div');
 		div.innerHTML = content;
 		let html = '<br>\n';
