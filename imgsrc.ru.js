@@ -161,17 +161,14 @@
 	function prepareThumbs(a, content){
 		let div = document.createElement('div');
 		div.innerHTML = content;
-		let firstImg = div.querySelector('td.curt img');
 		let html = '<br>\n';
-		if (firstImg) {
-			let src = firstImg.getAttribute('src');
-			html += '<a target="_blank" href="' + a.getAttribute('href') + '#bp"><img src="' + src + '" alt="#"></a> \n';
-			div.querySelectorAll('td.pret img').forEach(function (img){
-				let src = img.getAttribute('src');
-				let url = img.parentElement.getAttribute('href');
-				html += '<a target="_blank" href="' + url + '"><img src="' + src + '" alt="#"></a> \n';
-			});
-		} else html += '-----';
+		div.querySelectorAll('a[href*="#bp"] img').forEach(function (img){
+			let src = img.getAttribute('src');
+			let url = img.parentElement.getAttribute('href');
+			if (url === '#bp') url = a.getAttribute('href') + url;
+			html += '<a target="_blank" href="' + url + '"><img src="' + src + '" alt="#"></a> \n'
+		});
+		if (html.length < 10) html += '-----';
 		let td = a.parentElement;
 		td.innerHTML += html;
 	}
