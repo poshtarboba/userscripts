@@ -1,187 +1,174 @@
-/*
-
-TODO:
-- перед перезагрузкой категорий сохранять список в localstorage, после перезагрузки проверять новые альбомы, если они появились - добавлять в Title "[n] ", на onfocus - очищать localstorage и title
-
-*/
-
 (function() {
-	
-	removeSomeBlocks(); // удалить разные ненужные элементы
-	btnNextClick(); // автопереход по кнопке "Продолжить просмотр"
-	linkToAllImages(); // добавить ссылку на все фото альбома
+
 	imgLoadBigImage(document); // загрузить большие версии изображений
-	loadAllImages(); // загрузить все изображения на одной странице
-	
-	if (isCatPage() || isSearchPage()) {
-		addTableCSS(); // ховер-эффект для таблиц
-		catAutoReload(); // авторелоад списка категории
+	linkToAllImages(); // добавить ссылку на все фото альбома
+	loadAllImages(); // загрузить все картинки если в ссылке есть &showall=true
+	loadPreviews(); // кнопка загрузки превюх
+
+	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
+	function rndTimeTh(){ return Math.floor(Math.random() * 3000) + 1500; }
+
+	function xhrCreate(url, fn){
+		let xhr = new XMLHttpRequest();
+		xhr.open('get', url);
+		xhr.onreadystatechange = function(){
+			if (xhr.readyState !== 4) return;
+			if (xhr.status !== 200) return console.log('xhr-error ' + xhr.status + ': ' + xhr.statusText);
+			fn();
+		}
+		return xhr;
 	}
-	if (isUserPage()) {
-		addTableCSS(); // ховер-эффект для таблиц
-	}
-	if (isSomeThumbsPages()) {
-		loadAllThumbs(); // загрузить все превюхи на одной странице
-	}
-	
-	
-	function isCatPage(){ return location.pathname.substr(0, 5) === '/cat/'; }
-	function isSearchPage(){ return location.pathname.substr(0, 16) === '/main/search.php'; }
-	function isUserPage(){ return location.pathname === '/main/user.php'; }
-	function isSomeThumbsPages(){
-		
-	}
-	
-	function addTableCSS() {
-		console.log('Add hover for table');
-		let style = fxCreateTag('style');
-		style.innerText = '.zebra tr:hover > td { background-color: #c5ccd0; }';
-		document.head.appendChild(style);
-		fx$$('table th').forEach(function(th) {
-			if (th.innerText === 'фото') th.parentElement.parentElement.parentElement.classList.add('zebra');
-		});
-	}
-	
-	function btnNextClick() {
-		let btnNext = fx$1('[value="Продолжить просмотр"]');
-		if (btnNext) btnNext.parentElement.submit();
-	}
-	
-	function catAutoReload() {
-		console.log('autoreload');
-		let a = fx$1('a[href="/main/search.php"]');
-		let c = Math.floor(Math.random() * 241 + 60);
-		let span = fxCreateTag('span');
-		span.style.paddingRight = '12px';
-		span.innerText = c;
-		a.parentElement.insertBefore(span, a);
-		let i = setInterval(function() {
-			span.innerText = --c;
-			if (c <= 0) {
-				clearInterval(i);
-				location.reload();
-			}
-		}, 1000);
-	}
-	
+
 	function imgLoadBigImage(parent) {
 		let i = 0;
-		fx$$('img[data-src]', parent).forEach(function(img) {
-			img.setAttribute('src', img.dataset.src);
+		parent.querySelectorAll('img[data-src]').forEach(function(img) {
+			setTimeout(fun, i++ * 500 + rndTime(), img);
+		});
+		if (i) console.log('Loading big images:', i);
+		function fun(img){
 			img.classList.remove('lazyload');
+			img.setAttribute('src', img.dataset.src);
 			delete img.dataset.src;
-			i++;
-		});
-		if (i) console.log('Loaded big images:', i);
+		}
 	}
-	
+
 	function linkToAllImages() {
-		fx$$('a[href]').forEach(function(a) {
+		document.querySelectorAll('a[href*="/main/tape.php"]').forEach(function(a) {
 			let href = a.getAttribute('href');
-			if (href.substr(0, 14) === '/main/tape.php') {
-				console.log('Add link to all images');
-				a.innerText = 'все фото постранично';
-				let span = fxCreateTag('span');
-				span.innerHTML = ' | <a href="' + href + '&showall=true">все фото альбома</a>';
-				a.parentElement.insertBefore(span, a.nextElementSibling);
-			}
+			let span = document.createElement('span');
+			span.innerHTML = '&nbsp;|&nbsp;<a id="saLnk" href="' + href + '&showall=true">all</a>';
+			a.parentElement.insertBefore(span, a.nextElementSibling);
 		});
 	}
-	
+
 	function loadAllImages() {
 		let search = location.search.substr(1).split('&');
-		if (search.includes('showall=true')) {
-			let href = [];
-			fx$$('a.navdot[href]').forEach(function(a) {
-				let url = a.getAttribute('href');
-				href.forEach(function(item) { if (item === url) url = null; });
-				if (url) href.push(url);
-			});
-			if (href.length) console.log('Load all images, found pages:', href.length + 1);
-			let style = fxCreateTag('style');
-			style.innerHTML = 'img.big { display: inline-block; margin-bottom: 12px; } .images-page { padding: 20px 0;}';
-			document.head.appendChild(style);
-			let div = fxCreateTag('div');
-			div.classList.add('images-page');
-			let html = '';
-			fx$$('img.big').forEach(function(img) { html += img.outerHTML + '<br>'; });
-			div.innerHTML = html;
-			document.body.innerHTML = '';
-			document.body.appendChild(div);
-			getImagesPage(href);
-		}
-	}
-	
-	function getImagesPage(href) {
-		if (href.length === 0) return false;
-		console.log('Get next page, total left:', href.length);
-		fxGetURI(href.shift(), function(xhr){
-			if (xhr.status === 200){
-				let resp = xhr.response.match(/<body>([\s\S]*)<\/body>/gim);
-				if (!resp[0]) return;
-				let div = fxCreateTag('div');
-				div.classList.add('images-page');
-				div.innerHTML = resp[0].replace(/<\/?body>/g, '');
-				imgLoadBigImage(div);
-				let html = '';
-				fx$$('img.big', div).forEach(function(img){ html += img.outerHTML + '<br>'; })
-				div.innerHTML = html;
-				document.body.appendChild(div);
-			}
-			getImagesPage(href);
+		if (!search.includes('showall=true')) return;
+		let href = [];
+		document.querySelectorAll('a.navi[href]').forEach(function(a) {
+			let url = a.href;
+			if (!href.includes(url)) href.push(url);
 		});
+		let infoText = document.createElement('h1');
+		infoText.innerHTML = 'Preparing: <span id="infoText">1</span> / ' + (href.length + 1);
+		document.body.insertBefore(infoText, document.body.firstElementChild);
+		let style = document.createElement('style');
+		style.innerHTML = 'body { text-align: center; } img[alt="###"] { display: inline-block; margin-bottom: 12px; }';
+		document.head.appendChild(style);
+		let html = '<p id="pInfo">Loading images: ';
+		html += '<span id="curInfo"></span> / <span id="allInfo"></span></p>\n';
+		document.querySelectorAll('img.big').forEach(function(img) { html += imgHTMLCode(img); });
+		getImagesPage(href, html);
 	}
-	
-	function removeSomeBlocks() {
-		removeScripts(); // удалить скрипты
-		removeFromHeader(); // удалить элементы из хедера
-		removeFromFooter(); // удалить элементы из футера
-		if (isCatPage()) removeFineText(); // удалить красивый текст на страницах категорий
-		
-		function removeScripts() {
-			fx$$('body script').forEach(function(script) { script.remove(); });
-			fx$$('noscript').forEach(function(noscript) { noscript.remove(); });
-			fx$$('link[href*="flags.css"]').forEach(function(link) { link.remove(); });
+
+	function getImagesPage(href, html) {
+		if (href.length === 0) {
+			clearHeader();
+			document.body.innerHTML = html;
+			document.getElementById('allInfo').innerText = document.querySelectorAll('img').length;
+			loadNextImage();
+			return;
 		}
-		function removeFromHeader() {
-			fx$$('img.badge').forEach(function(img) { img.parentElement.innerHTML = "[ Logout ]" });
-			fx$$('.topmenu a.tomato').forEach(function(a) { a.remove(); });
-			fx$$('a[href="/main/dudes.php"]').forEach(function(a) { a.remove(); });
-			fx$$('tr.topmenu td[align="right"]').forEach(function(td) { td.innerHTML = td.innerHTML.replace(/\|/g, '&nbsp;'); });
-			fx$$('td[width="100"] img[width="100"][height="100"]').forEach(function(img) { img.parentElement.remove(); });
-		}
-		function removeFromFooter() {
-			let bottomLine = fx$1('td.bottomline');
-			if (bottomLine) bottomLine.parentElement.remove();
-			fx$$('body > a').forEach(function(a) { a.remove(); });
-		}
-		function removeFineText() {
-			let formSearch = fx$1('form[name="srch"]');
-			if (!formSearch) return;
-			let h2, p;
-			while (true) {
-				h2 = formSearch.nextElementSibling;
-				p = h2.nextElementSibling;
-				if (h2 && h2.tagName.toLowerCase() !== 'h2') break;
-				if (p && p.tagName.toLowerCase() !== 'p') break;
-				if (h2.innerText === 'Подразделы') break;
-				if (h2.innerText === 'Популярные теги раздела') break;
-				h2.remove();
-				p.remove();
+		console.log('Get next page, total left:', href.length);
+		let infoText = document.getElementById('infoText');
+		infoText.innerText = +infoText.innerText + 1;
+		let xhr = xhrCreate(href.shift(), function (){
+			let content = xhr.responseText.match(/<body>([\s\S]*)<\/body>/);
+			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);
+			else {
+				let div = document.createElement('div');
+				div.innerHTML = content[1];
+				div.querySelectorAll('img.big').forEach(function (img){ html += imgHTMLCode(img); });
 			}
-		}
+			getImagesPage(href, html);
+		});
+		setTimeout(function (){ xhr.send(); }, rndTime());
 	}
-	
-	function loadAllThumbs(){
-		let allPhotoPerPages;
-		for (let i = 0; i < document.links.length; i++) {
-			if (document.links[i].innerText === 'все фото постранично') {
-				allPhotoPerPages = true;
-				break;
+
+	function imgHTMLCode(img){
+		let url = img.classList.contains('lazyload') ? img.dataset.src : img.getAttribute('src');
+		return '<img src="" data-src="' + url + '" alt="###"><br>\n';
+	}
+
+	function loadNextImage(){
+		let img = document.querySelector('img[data-src]');
+		if (!img) {
+			document.getElementById('pInfo').innerText = 'All images was loaded';
+			return;
+		};
+		img.addEventListener('load', function (){
+			let span = document.getElementById('curInfo');
+			span.innerText = +span.innerText + 1;
+			setTimeout(loadNextImage, rndTime());
+		});
+		img.setAttribute('src', img.dataset.src);
+		delete img.dataset.src;
+	}
+
+	function clearHeader(){
+		document.head.querySelectorAll('meta, link, script').forEach(function(tag){ tag.remove(); });
+		document.head.innerHTML = '<meta charset="utf-8">\n' + document.head.innerHTML;
+		let username = document.querySelector('a[href*="?user="]').getAttribute('href').match(/\?user=(.+)/)[1];
+		let albumName = document.title.replace(' @iMGSRC.RU', '');
+		document.title = 'imgsrc.ru ' + username + ' - ' + albumName;
+	}
+
+	function loadPreviews(){
+		let a = document.querySelector('[href*="/main/switch.php?show=pix"]');
+		if (!a) return;
+		let th = a.parentElement;
+		th.innerHTML += ' <span id="showTh" style="color: #c00; cursor: pointer;">show thumbs</span>';
+		let btn = document.getElementById('showTh');
+		btn.onclick = function (){
+			btn.style.display = 'none';
+			th.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
+				let a = td.firstElementChild;
+				if (a) a.classList.add('waiting-for-thumbs');
+			});
+			loadNextThumbs();
+		};
+	}
+
+	function loadNextThumbs(){
+		let a = document.querySelector('.waiting-for-thumbs');
+		if (!a) return;
+		a.classList.remove('waiting-for-thumbs');
+		let xhr = xhrCreate(a.href, function (){
+			let content = xhr.responseText.match(/<body>([\s\S]*)<\/body>/);
+			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);
+			else {
+				let b1 = content[1].match(/value="Continue to album"/);
+				let b2 = content[1].match(/value="Продолжить просмотр"/);
+				if (b1 || b2) {
+					let xhr2 = xhrCreate(a.href, function (){
+						let content2 = xhr2.responseText.match(/<body>([\s\S]*)<\/body>/);
+						if (content2.length !== 2) console.warn('Error parsing page, xhr:', xhr2);
+						else prepareThumbs(a, content2[1]);
+					});
+					xhr2.send();
+				} else prepareThumbs(a, content[1]);
 			}
-		}
-		// если есть пагинация
-		return allPhotoPerPages;// && pagination;
+			loadNextThumbs();
+		});
+		setTimeout(function (){ xhr.send(); }, rndTimeTh());
 	}
-	
+
+	function prepareThumbs(a, content){
+		let div = document.createElement('div');
+		div.innerHTML = content;
+		let firstImg = div.querySelector('td.curt img');
+		let html = '<br>\n';
+		if (firstImg) {
+			let src = firstImg.getAttribute('src');
+			html += '<a target="_blank" href="' + a.getAttribute('href') + '#bp"><img src="' + src + '" alt="#"></a> \n';
+			div.querySelectorAll('td.pret img').forEach(function (img){
+				let src = img.getAttribute('src');
+				let url = img.parentElement.getAttribute('href');
+				html += '<a target="_blank" href="' + url + '"><img src="' + src + '" alt="#"></a> \n';
+			});
+		} else html += '-----';
+		let td = a.parentElement;
+		td.innerHTML += html;
+	}
+
 })();
