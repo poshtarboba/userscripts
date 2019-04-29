@@ -137,10 +137,12 @@
 			let content = xhr.responseText.match(/<body>([\s\S]*)<\/body>/);
 			if (content.length !== 2) console.warn('Error parsing page, xhr:', xhr);
 			else {
-				let b1 = content[1].match(/value="Continue to album"/);
-				let b2 = content[1].match(/value="Продолжить просмотр"/);
-				if (b1 || b2) {
-					let xhr2 = xhrCreate(a.href, function (){
+				let div = document.createElement('div');
+				div.innerHTML = content[1];
+				let btn = div.querySelector('input[value="Continue to album"]');
+				if (!btn) btn = div.querySelector('input[value="Продолжить просмотр"]');
+				if (btn) {
+					let xhr2 = xhrCreate(btn.parentElement.action, function (){
 						let content2 = xhr2.responseText.match(/<body>([\s\S]*)<\/body>/);
 						if (content2.length !== 2) console.warn('Error parsing page, xhr:', xhr2);
 						else prepareThumbs(a, content2[1]);
