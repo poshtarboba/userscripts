@@ -36,9 +36,8 @@
 		let img = document.getElementById('image') || document.getElementById('webm-container');
 		if (!img) return;
 		let offsetTop = 0;
+		// переробити, використати повний оффсет замість циклу
 		while (img && img.offsetTop !== undefined) { offsetTop += img.offsetTop; img = img.offsetParent; }
-		console.log(offsetTop);
-		//window.scroll({ top: offsetTop - 4, behavior: "smooth" });
 		window.scroll({ top: offsetTop - 4 });
 	}
 
@@ -48,13 +47,13 @@
 			let span = li.querySelector('.post-count');
 			if (!span) return;
 			let n = parseInt(span.innerText);
-			let opacity = 0;
-			if (n < 50) opacity = 0.15;
-			else if (n < 200) opacity = 0.12;
-			else if (n < 500) opacity = 0.09;
-			else if (n < 2000) opacity = 0.06;
-			else if (n < 5000) opacity = 0.03;
-			li.style.backgroundColor = 'rgba(255,255,255,' + opacity + ')';
+			let alpha = 0;
+			if (n < 50) alpha = 0.15;
+			else if (n < 200) alpha = 0.12;
+			else if (n < 500) alpha = 0.09;
+			else if (n < 2000) alpha = 0.06;
+			else if (n < 5000) alpha = 0.03;
+			li.style.backgroundColor = 'rgba(255, 255, 255, ' + alpha + ')';
 		});
 	}
 

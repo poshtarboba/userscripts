@@ -1,7 +1,5 @@
-/* main script:
-
+// ==UserScript==
 // @name         main
 // @match        http*://*/*
-// @require      https://poshtarboba.github.io/js/us/main.js?2
-
-*/
+// @require      https://poshtarboba.github.io/userscripts/main.js?5
+// ==/UserScript==

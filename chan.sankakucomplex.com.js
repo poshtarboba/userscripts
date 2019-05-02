@@ -4,6 +4,7 @@ window.eval = function(s) { console.log('eval(s), s.length = ', s.length); };
 console.clear = function() { console.log('console.clear();'); };
 document.write = function(s) { console.log('document.write(s), s.length = ', s.length); };
 document.writeln = function(s) { console.log('document.writeln(s), s.length = ', s.length); };
+console.log('chan:before done');
 
 */
 (function() {
