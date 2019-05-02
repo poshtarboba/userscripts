@@ -1,6 +1,0 @@
-regexp: .*reactor.*
-
-#post_list ~ div  .mgbox { position: absolute !important; z-index: -1; opacity: 0.01; }
-.pagination_expanded { display: inline-block !important; }
-.pagination_main .prev, .pagination .current.prev,
-.pagination_main .next, .pagination .current.next { width: auto !important; padding-left: 15px; padding-right: 15px; }
