@@ -62,9 +62,9 @@
 		let poolShow = document.getElementById('pool-show');
 		if (!postList && !poolShow) return;
 		let html = '<li class="itape-btns">';
-		html += '<span id="itapeDown">▼▼▼</span> ';
-		if (postList) html += '&nbsp; &nbsp;<span id="itapeUp">▲▲▲</span> ';
-		html += '<span id="itapeClear" style="display:none;">Clear</span> ';
+		html += '<span id="itapeDown">▼▼▼</span>&nbsp;';
+		if (postList) html += '&nbsp;&nbsp;&nbsp;<span id="itapeUp">▲▲▲</span>&nbsp;';
+		html += '<span id="itapeClear" style="display:none;">Clear</span>&nbsp;';
 		html += '<b id="itapeInfo" style="display: none;">Loading&nbsp;<i id="itiType">next&nbsp;pages</i>:&nbsp;';
 		html += '<i id="itiCur">0</i>&nbsp;/&nbsp;<i id="itiTotal">0</i></b></li>';
 		let br = document.querySelector('#subnav ul > br');
