@@ -9,12 +9,16 @@
 	function rndTimeTh(){ return Math.floor(Math.random() * 3000) + 1500; }
 	function getBody(xhr){ return xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/); }
 
-	function xhrCreate(url, fn){
+	function xhrCreate(url, fn, passError = true){
 		let xhr = new XMLHttpRequest();
 		xhr.open('get', url);
 		xhr.onreadystatechange = function(){
 			if (xhr.readyState !== 4) return;
-			if (xhr.status !== 200) return console.log('xhr-error ' + xhr.status + ': ' + xhr.statusText);
+			if (xhr.status !== 200) {
+				console.warn('xhr-error ' + xhr.status + ': ' + xhr.statusText);
+				if (passError) fn();
+				return;
+			}
 			fn();
 		}
 		return xhr;
