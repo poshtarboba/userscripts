@@ -158,11 +158,14 @@
 				if (btn) {
 					let url = btn.parentElement.action;
 					url = url.match(/https?:\/\/imgsrc.+$/);
-					if (url) xhrCreate(url[0], function (){
+					if (url) {
+						let xhr2 = xhrCreate(url[0], function (){
 							let content2 = getBody(xhr2);
 							if (content2.length !== 2) console.warn('Error parsing page, xhr:', xhr2);
 							else prepareThumbs(a, content2[1]);
-						}).send();
+						});
+						xhr2.send();
+					}
 				} else prepareThumbs(a, content[1]);
 			}
 			loadNextThumbs();
