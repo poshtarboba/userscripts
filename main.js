@@ -12,7 +12,7 @@
 	function addScript(fileName){
 		let script = document.creareElement('script');
 		script.setAttribute('src', 'https://poshtarboba.github.io/userscripts/' + fileName);
-		document.documentElement.appendChild(script);
+		document.body.appendChild(script);
 		console.log('Added script', fileName);
 	}
 
