@@ -178,6 +178,7 @@
 		div.innerHTML = content;
 		let html = '<br>\n';
 		div.querySelectorAll('a[href*="#bp"] img').forEach(function (img){
+			if (img.getAttribute('id') === 'big') return;
 			let src = img.getAttribute('src');
 			let url = img.parentElement.getAttribute('href');
 			if (url === '#bp') url = a.getAttribute('href') + url;
