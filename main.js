@@ -10,7 +10,7 @@
 	if (location.host.indexOf('reactor.cc') > -1) addScript('joyreactor.cc.js');
 
 	function addScript(fileName){
-		let script = document.creareElement('script');
+		let script = document.createElement('script');
 		script.setAttribute('src', 'https://poshtarboba.github.io/userscripts/' + fileName);
 		document.body.appendChild(script);
 		console.log('Added script', fileName);
