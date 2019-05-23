@@ -66,10 +66,17 @@
 		styleHtml += '#itape #fullHgh:checked ~ img { max-height: none; }\n';
 		style.innerHTML = styleHtml;
 		document.head.appendChild(style);
-		let html = '<div id="itape">\n<p>Keys A, Q for navigation, W - for change view</p>\n';
-		html += '<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
-		html += '<p id="pInfo">Loading images: ';
-		html += '<span id="curInfo"></span> / <span id="allInfo"></span></p>\n';
+		window.userHref = '/main/user.php?user=';
+		document.querySelectorAll('a').forEach(function (a){
+			let href = a.getAttribute('href');
+			if (href.substr(0, 20) === window.userHref) window.albumOwner = href.substr(20);
+		});
+		window.topLinks = '<a href="/main/search.php">Search</a> &nbsp;&nbsp;\n';
+		if (window.albumOwner) window.topLinks += '<a href="' + window.userHref + window.albumOwner + '">User ' + window.albumOwner + '</a> &nbsp;&nbsp; \n';
+		let html = '<div id="itape">\n' + window.topLinks + '<span>Keys A, Q for navigation, W - for change view</span>\n';
+		html += '<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height&nbsp;&nbsp;&nbsp;&nbsp;\n';
+		html += '<span id="pInfo">Loading images: ';
+		html += '<span id="curInfo"></span> / <span id="allInfo"></span></span><br>\n';
 		document.querySelectorAll('img.big').forEach(function(img) { html += imgHTMLCode(img); });
 		getImagesPage(href, html);
 	}
@@ -77,7 +84,7 @@
 	function getImagesPage(href, html) {
 		if (href.length === 0) {
 			clearHeader();
-			document.body.innerHTML = html + '</div>';
+			document.body.innerHTML = html + '</div>\n<p>' + window.topLinks + '</p>';
 			document.getElementById('allInfo').innerText = document.querySelectorAll('img').length;
 			addImagesNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
 			loadNextImage();
