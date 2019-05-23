@@ -69,7 +69,7 @@
 		window.userHref = '/main/user.php?user=';
 		document.querySelectorAll('a').forEach(function (a){
 			let href = a.getAttribute('href');
-			if (href.substr(0, 20) === window.userHref) window.albumOwner = href.substr(20);
+			if (href && (href.substr(0, 20) === window.userHref)) window.albumOwner = href.substr(20);
 		});
 		window.topLinks = '<a href="/main/search.php">Search</a> &nbsp;&nbsp;\n';
 		if (window.albumOwner) window.topLinks += '<a href="' + window.userHref + window.albumOwner + '">User ' + window.albumOwner + '</a> &nbsp;&nbsp; \n';
