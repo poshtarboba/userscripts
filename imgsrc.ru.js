@@ -82,7 +82,7 @@
 			css += '#tapeImages input { position: relative; top: 3px; margin-left: 16px; }\n';
 			css += '#tapeImages img { display: block; margin: 0 auto 20px; max-height: 98vh; }\n';
 			css += '#tapeImages.ti-full-mode img { max-height: none; }\n';
-			css += '#tapeImages.ti-thumb-mode img { display: inline-block; margin: 0 0 4px; max-height: ' + THUMB_HEIGHT + '; cursor: pointer; }\n';
+			css += '#tapeImages.ti-thumb-mode img { margin: 0 0 4px; max-height: ' + THUMB_HEIGHT + '; cursor: pointer; }\n';
 			css += '#tapeImages.ti-thumb-lt1 img { max-height: ' + THUMB_HEIGHT_LT1 + '; }\n';
 			css += '#tapeImages.ti-thumb-lt2 img { max-height: ' + THUMB_HEIGHT_LT2 + '; }\n';
 			css += '#tapeImages.ti-thumb-lt3 img { max-height: ' + THUMB_HEIGHT_LT3 + '; }\n';
@@ -91,7 +91,8 @@
 			css += '#tapeImages.ti-thumb-gt3 img { max-height: ' + THUMB_HEIGHT_GT3 + '; }\n';
 			css += '#tapeImages.ti-thumb-mode img:not(.full-size):hover { opacity: 0.8; }\n';
 			css += '#tapeImages.ti-thumb-mode img.full-size { position: fixed; z-index: 33; left: 50%; top: 50%; transform: translate(-50%, -50%); max-height: 98vh; box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.9); }\n';
-			css += '#tapeImages .img-wrap { display: inline-block; position: relative; }\n';
+			css += '#tapeImages .img-wrap { display: block; position: relative; }\n';
+			css += '#tapeImages.ti-thumb-mode .img-wrap { display: inline-block; }\n';
 			css += '#tapeImages .img-btn { position: absolute; right: 0; top: 0; width: 100px; min-height: 100px; opacity: 0; text-align: center; }\n';
 			css += '#tapeImages .img-btn:hover { opacity: 1; }\n';
 			css += '#tapeImages .img-btn a { display: block; margin-bottom: 4px; padding: 8px 0; background: #fff; border: 1px solid silver; opacity: 0.4; text-decoration: none; }\n';
