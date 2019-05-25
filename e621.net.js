@@ -206,8 +206,7 @@
 			let highRes = div.querySelector('#highres');
 			if (highRes) {
 				html += '<span class="img-wrap"><img src="" data-src="' + highRes.href + '" alt="###">';
-				html += '<span class="img-btn"><a href="' + highRes.href + '" download>Download</a>';
-				html += '<a href="' + currentLink + '">Link</a>';
+				html += '<span class="img-btn"><a href="' + currentLink + '">Link</a>';
 				html += '</span></span><br class="br">\n';
 			}
 			let inf = document.getElementById('itiCur');

@@ -143,8 +143,7 @@
 		let src = img.classList.contains('lazyload') ? img.dataset.src : img.getAttribute('src');
 		let url = img.parentElement.nextElementSibling.getAttribute('href');
 		let html = '<span class="img-wrap"><img src="" data-src="' + src + '" alt="###">';
-		html += '<span class="img-btn"><a href="' + src + '" download>Download</a>';
-		html += '<a href="' + url + '">Link</a></span></span><br class="br">\n';
+		html += '<span class="img-btn"><a href="' + url + '">Link</a></span></span><br class="br">\n';
 		return html;
 	}
 
