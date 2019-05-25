@@ -25,14 +25,55 @@
 
 	function addStyles(){
 		let style = document.createElement('style');
-		let html = '#image, video { width: auto; height: auto; max-width: calc(100vw - 320px); max-height: 98vh; }\n';
-		html += '#itape { text-align:center; }\n';
-		html += '#itape img { display: inline-block; margin-bottom: 20px; max-width: 100%; max-height: 98vh; }\n';
-		html += '#itape #fullHgh:checked ~ img { max-height: none; }\n';
-		html += '.itape-btns span { color: #b4c7d9; cursor: pointer; }\n';
-		html += '.itape-btns span:hover { color: #2e76b4; }\n';
-		html += '.itape-btns i { font-style: normal; }\n.itape-btns b { padding-left: 16px; }\n';
-		style.innerHTML = html;
+		let css = '\n#image, video { width: auto; height: auto; max-width: calc(100vw - 320px); max-height: 98vh; }\n';
+		css += '.itape-btns span { color: #b4c7d9; cursor: pointer; }\n';
+		css += '.itape-btns span:hover { color: #2e76b4; }\n';
+		css += '.itape-btns i { font-style: normal; }\n';
+		css += '.itape-btns b { padding-left: 16px; }\n';
+		css += 'html.smooth-scroll { scroll-behavior: smooth; }\n';
+		css += 'body { -moz-user-select: none; user-select: none; }\n';
+		css += 'body.tape-images-mode { margin: 0; padding: 8px; background: #000; color: #666; }\n';
+		css += 'img { max-width: 100%; }\n';
+		css += '#tapeTools { position: fixed; z-index: 66000; right: 20px; top: 10px; background: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); opacity: 0.1; }\n';
+		css += '#tapeTools:hover, #tapeTools.active { opacity: 1; }\n';
+		css += '#tapeTools span { display: block; }\n';
+		css += '#tapeTools .tt-handler { height: 8px; background: #999; cursor: move; }\n';
+		css += '#tapeTools span.tt-mode { padding: 0 4px 2px; font-size: 120%; cursor: pointer; }\n';
+		css += '#tapeTools span.tt-mode:hover { background: #eee; }\n';
+		css += '#tapeTools span.tt-mode.active { background: #ddd; }\n';
+		css += '#tapeTools span.tt-mode.active:hover { background: #ccc; }\n';
+		css += '#tapeTools span.tt-thumb-size { display: none; }\n';
+		css += '#tapeTools span#ttm3.active ~ span.tt-thumb-size { display: block; }\n';
+		css += '#tapeTools span.tt-thumb-size:after { content: ""; display: block; clear: both; }\n';
+		css += '#tapeTools span.tt-thumb-size > span { float: left; width: 35%; text-align: center; border: 1px solid silver; box-sizing: border-box; cursor: pointer; opacity: 0.5; }\n';
+		css += '#tapeTools span.tt-thumb-size > span:hover { background: #eee; opacity: 1; }\n';
+		css += '#tapeTools span.tt-thumb-size > span:active { color: #000; border-color: #000; }\n';
+		css += '#tapeTools span.tt-thumb-size > em { float: left; padding-top: 3px; width: 30%; font-size: 0.7em; font-style: normal; text-align: center; }\n';
+		css += '#tapeImages p { text-align: center; }\n';
+		css += '#tapeImages label { cursor: pointer; }\n';
+		css += '#tapeImages input { position: relative; top: 3px; margin-left: 16px; }\n';
+		css += '#tapeImages img { display: block; margin: 0 auto 20px; max-height: 98vh; }\n';
+		css += '#tapeImages.ti-full-mode img { max-height: none; }\n';
+		css += '#tapeImages.ti-thumb-mode img { display: inline-block; margin: 0 0 4px; max-height: ' + THUMB_HEIGHT + '; cursor: pointer; }\n';
+		css += '#tapeImages.ti-thumb-lt1 img { max-height: ' + THUMB_HEIGHT_LT1 + '; }\n';
+		css += '#tapeImages.ti-thumb-lt2 img { max-height: ' + THUMB_HEIGHT_LT2 + '; }\n';
+		css += '#tapeImages.ti-thumb-lt3 img { max-height: ' + THUMB_HEIGHT_LT3 + '; }\n';
+		css += '#tapeImages.ti-thumb-gt1 img { max-height: ' + THUMB_HEIGHT_GT1 + '; }\n';
+		css += '#tapeImages.ti-thumb-gt2 img { max-height: ' + THUMB_HEIGHT_GT2 + '; }\n';
+		css += '#tapeImages.ti-thumb-gt3 img { max-height: ' + THUMB_HEIGHT_GT3 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode img:not(.full-size):hover { opacity: 0.8; }\n';
+		css += '#tapeImages.ti-thumb-mode img.full-size { position: fixed; z-index: 33; left: 50%; top: 50%; transform: translate(-50%, -50%); max-height: 98vh; box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.9); }\n';
+		css += '#tapeImages .img-wrap { display: inline-block; position: relative; }\n';
+		css += '#tapeImages.ti-thumb-mode br.br { display: none; }\n';
+		css += '#tapeImages .img-btn { position: absolute; right: 0; top: 0; width: 100px; min-height: 100px; opacity: 0; text-align: center; }\n';
+		css += '#tapeImages .img-btn:hover { opacity: 1; }\n';
+		css += '#tapeImages .img-btn a { display: block; margin-bottom: 4px; padding: 8px 0; background: #fff; border: 1px solid silver; opacity: 0.4; text-decoration: none; }\n';
+		css += '#tapeImages .img-btn a:hover { opacity: 1; }\n';
+		css += '#tapeImages .img-btn a:active { color: red; border-color: red; }\n';
+		css += '#tapeImages.ti-thumb-mode .img-btn { display: none; }\n';
+		css += '#tapeImages.ti-thumb-mode img.full-size ~ .img-btn { display: block; position: fixed; z-index: 35; opacity: 0.1; }\n';
+		css += '#tapeImages.ti-thumb-mode img.full-size ~ .img-btn:hover { opacity: 1; }\n';
+		style.innerHTML = css;
 		document.head.appendChild(style);
 	}
 
@@ -107,11 +148,13 @@
 	function itapeClearClick(){
 		document.head.querySelectorAll('link, script').forEach(function(tag){ tag.remove(); });
 		document.title = 'e621 - ' + document.title.replace(' - e621', '').replace('/', '');
-		let styleHtml = '\nhtml, body { scroll-behavior: smooth; }\n';
-		styleHtml += 'body { color: #fff; background-color: #000; }\n';
-		document.head.querySelector('style').innerHTML += styleHtml;
-		document.body.innerHTML = document.getElementById('itape').outerHTML;
-		addImagesNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
+		document.body.innerHTML = document.getElementById('tapeImages').outerHTML;
+		addTapeTools();
+		addNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
+	}
+
+	function addCSS(){
+		
 	}
 
 	function itapeLoadNextListPages(nextListPages, linksArr){
@@ -119,8 +162,11 @@
 			document.getElementById('itiCur').innerText = '0';
 			document.getElementById('itiType').innerHTML = 'image&nbsp;pages';
 			document.getElementById('itiTotal').innerText = linksArr.length;
-			let html = '<div id="itape">\n<p>Keys A, Q for navigation, W - for change view</p>\n';
-			html += '<input type="checkbox" id="fullHgh">&nbsp;Full&nbsp;height<br><br>\n';
+			let html = '<div id="tapeImages">\n';
+			html += '<p>\nA, Q - prev, next image, W - change mode:\n';
+			html += '<label><input type="radio" id="trm1" name="trm" checked> screen size</label>\n';
+			html += '<label><input type="radio" id="trm2" name="trm"> full size</label>\n';
+			html += '<label><input type="radio" id="trm3" name="trm"> thumb size (+ / -)</label>\n</p>\n<p>\n';
 			itapeLoadPages(linksArr, html);
 			return;
 		}
@@ -142,17 +188,24 @@
 			document.getElementById('content').innerHTML += html + '</div>';
 			document.getElementById('itiType').innerText = 'images';
 			document.getElementById('itiCur').innerText = 0;
-			document.getElementById('itiTotal').innerText = document.querySelectorAll('#itape img').length;
+			document.getElementById('itiTotal').innerText = document.querySelectorAll('#tapeImages img').length;
 			itapeLoadImages();
 			return;
 		}
-		let xhr = xhrCreate(links.shift(), function (){
+		let currentLink = links.shift();
+		let xhr = xhrCreate(currentLink, function (){
 			let content = getBody(xhr);
 			let div = document.createElement('div');
 			div.innerHTML = content[1];
 			let img = new Image();
 			let highRes = div.querySelector('#highres');
-			if (highRes) html += '<img src="" data-src="' + highRes.href + '" alt="#"><br>\n';
+			if (highRes) {
+				html += '<span class="img-wrap"><img src="" data-src="' + highRes.href + '" alt="###">';
+				html += '<span class="img-btn"><a href="' + highRes.href + '" download>Download</a>';
+				html += '<a href="' + currentLink + '">Link</a>';
+				html += '</span></span><br class="br">\n';
+				html += '<img src="" data-src="' + highRes.href + '" alt="#"><br>\n';
+			}
 			let inf = document.getElementById('itiCur');
 			inf.innerText = +inf.innerText + 1;
 			itapeLoadPages(links, html)
@@ -161,7 +214,7 @@
 	}
 
 	function itapeLoadImages(){
-		let img = document.querySelector('#itape img[data-src]');
+		let img = document.querySelector('#tapeImages img[data-src]');
 		if (!img) {
 			document.getElementById('itapeClear').style.display = '';
 			return;
@@ -177,31 +230,128 @@
 		}, rndTime());
 	}
 
-	function addImagesNavKeys(){
+	function addNavKeys(){
+		let tapeImages = document.getElementById('tapeImages');
+		let radioMode1 = document.getElementById('trm1');
+		let radioMode2 = document.getElementById('trm2');
+		let radioMode3 = document.getElementById('trm3');
+		let itemMode1 = document.getElementById('ttm1');
+		let itemMode2 = document.getElementById('ttm2');
+		let itemMode3 = document.getElementById('ttm3');
+		let thumbInc = document.getElementById('thumbinc');
+		let thumbDec = document.getElementById('thumbdec');
+		let thumbSz = document.getElementById('thumbsz');
+		let images = tapeImages.querySelectorAll('img');
+		let activeImage = 0;
+		radioMode1.addEventListener('click', setMode1);
+		radioMode2.addEventListener('click', setMode2);
+		radioMode3.addEventListener('click', setMode3);
+		itemMode1.addEventListener('click', setMode1);
+		itemMode2.addEventListener('click', setMode2);
+		itemMode3.addEventListener('click', setMode3);
+		thumbInc.addEventListener('click', increaseThumb);
+		thumbDec.addEventListener('click', decreaseThumb);
+		window.addEventListener('scroll', windowScroll);
 		window.addEventListener('keydown', function (e){
 			if (e.keyCode === 81) pressedNavKey('q'); // нажали q
 			if (e.keyCode === 65) pressedNavKey('a'); // нажали a
-			if (e.keyCode === 87) pressedWkey();
+			if (e.keyCode === 87) { // нажали w
+				if (radioMode1.checked) return setMode2();
+				if (radioMode2.checked) return setMode3();
+				if (radioMode3.checked) return setMode1();
+			}
+			if (e.keyCode === 61 || e.keyCode === 107) increaseThumb(); // нажали +
+			if (e.keyCode === 173 || e.keyCode === 109) decreaseThumb(); // нажали -
 		});
-		function pressedWkey(){
-			let input = document.getElementById('fullHgh');
-			if (input) input.checked = !input.checked;
-		}
-		function pressedNavKey(key){
-			if (document.images.length < 1) return;
+		tapeImages.querySelectorAll('img').forEach(function (img){
+			img.addEventListener('click', imgClick);
+		});
+		function windowScroll(){
+			if (images.length < 1) return;
+			if (tapeImages.classList.contains('ti-thumb-mode')) return;
 			let halfScreen = window.innerHeight / 2;
 			let centerPos = halfScreen + window.scrollY;
 			let imgCenters = [];
-			for (let i = 0; i < document.images.length; i++) imgCenters.push(Math.abs(centerPos - imgCenter(document.images[i])));
+			for (let i = 0; i < images.length; i++) imgCenters.push(Math.abs(centerPos - imgCenter(images[i])));
+			activeImage = 0;
+			for (let i = 1; i < imgCenters.length; i++) if (imgCenters[i] < imgCenters[activeImage]) activeImage = i;
+		}
+		function scrollToActiveImage(){
+			let yPos = imgCenter(images[activeImage]) - window.innerHeight / 2;
+			document.documentElement.classList.remove('smooth-scroll');
+			window.scroll(0, yPos);
+			document.documentElement.classList.add('smooth-scroll');
+		}
+		function setMode1(){
+			radioMode1.checked = true;
+			itemMode1.classList.add('active');
+			itemMode2.classList.remove('active');
+			itemMode3.classList.remove('active');
+			tapeImages.classList.remove('ti-full-mode');
+			tapeImages.classList.remove('ti-thumb-mode');
+			scrollToActiveImage();
+		}
+		function setMode2(){
+			radioMode2.checked = true;
+			itemMode1.classList.remove('active');
+			itemMode2.classList.add('active');
+			itemMode3.classList.remove('active');
+			tapeImages.classList.remove('ti-thumb-mode');
+			tapeImages.classList.add('ti-full-mode');
+			scrollToActiveImage();
+		}
+		function setMode3(){
+			radioMode3.checked = true;
+			itemMode1.classList.remove('active');
+			itemMode2.classList.remove('active');
+			itemMode3.classList.add('active');
+			tapeImages.classList.remove('ti-full-mode');
+			tapeImages.classList.add('ti-thumb-mode');
+		}
+		function pressedNavKey(key){
+			if (images.length < 1) return;
+			if (tapeImages.classList.contains('ti-thumb-mode')) return;
+			let halfScreen = window.innerHeight / 2;
+			let centerPos = halfScreen + window.scrollY;
+			let imgCenters = [];
+			for (let i = 0; i < images.length; i++) imgCenters.push(Math.abs(centerPos - imgCenter(images[i])));
 			let min = 0;
 			for (let i = 1; i < imgCenters.length; i++) if (imgCenters[i] < imgCenters[min]) min = i;
 			let next = min + (key === 'q' ? -1 : 1);
-			if (next < 0) next = 0;
-			if (next > imgCenters.length - 1) next = imgCenters.length - 1;
-			let yPos = imgCenter(document.images[next]) - halfScreen;
+			next = Math.max(Math.min(next, imgCenters.length - 1), 0);
+			let yPos = imgCenter(images[next]) - halfScreen;
 			window.scroll(0, yPos);
 		}
 		function imgCenter(img){ return img.clientHeight / 2 + img.offsetTop; }
+		function imgClick(){
+			if (!tapeImages.classList.contains('ti-thumb-mode')) return;
+			this.classList.toggle('full-size');
+		}
+		function increaseThumb(){
+			if (!tapeImages.classList.contains('ti-thumb-mode')) return;
+			if (tapeImages.classList.contains('ti-thumb-gt3')) return;
+			let zoom = tapeImages.dataset.thumbsize || 0;
+			thumbSz.innerText = tapeImages.dataset.thumbsize = +zoom + 1;
+			changeThumbSizeClasses();
+		}
+		function decreaseThumb(){
+			if (!tapeImages.classList.contains('ti-thumb-mode')) return;
+			if (tapeImages.classList.contains('ti-thumb-lt3')) return;
+			let zoom = tapeImages.dataset.thumbsize || 0;
+			thumbSz.innerText = tapeImages.dataset.thumbsize = +zoom - 1;
+			changeThumbSizeClasses();
+		}
+		function changeThumbSizeClasses(){
+			tapeImages.classList.remove('ti-thumb-lt1');
+			tapeImages.classList.remove('ti-thumb-lt2');
+			tapeImages.classList.remove('ti-thumb-lt3');
+			tapeImages.classList.remove('ti-thumb-gt1');
+			tapeImages.classList.remove('ti-thumb-gt2');
+			tapeImages.classList.remove('ti-thumb-gt3');
+			let zoom = +tapeImages.dataset.thumbsize;
+			if (zoom > 0) tapeImages.classList.add('ti-thumb-gt' + zoom);
+			if (zoom < 0) tapeImages.classList.add('ti-thumb-lt' + -zoom);
+		}
 	}
 
 })();
