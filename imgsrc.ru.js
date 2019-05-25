@@ -124,7 +124,7 @@
 			window.topLinks = '<a href="/main/search.php">Search</a> &nbsp;&nbsp;\n';
 			if (userName) window.topLinks += '<a href="' + userHref + userName + '">User ' + userName + '</a> &nbsp;&nbsp; \n';
 			
-			let html = '<div id="tapeImages">\n<p>\n' + window.topLinks';
+			let html = '<div id="tapeImages">\n<p>\n' + window.topLinks;
 			html += '<p>A, Q - prev, next image, W - change mode:\n';
 			html += '<label><input type="radio" id="trm1" name="trm" checked> screen size</label>\n';
 			html += '<label><input type="radio" id="trm2" name="trm"> full size</label>\n';
