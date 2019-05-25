@@ -211,7 +211,6 @@
 				html += '<span class="img-btn"><a href="' + highRes.href + '" download>Download</a>';
 				html += '<a href="' + currentLink + '">Link</a>';
 				html += '</span></span><br class="br">\n';
-				html += '<img src="" data-src="' + highRes.href + '" alt="#"><br>\n';
 			}
 			let inf = document.getElementById('itiCur');
 			inf.innerText = +inf.innerText + 1;
