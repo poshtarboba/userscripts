@@ -59,8 +59,8 @@
 
 		function addCSS(){
 			let css = '\nhtml.smooth-scroll { scroll-behavior: smooth; }\n';
-			css += 'body { margin: 0; padding: 8px; -moz-user-select: none; user-select: none; }\n';
-			css += 'body.tape-images-mode { background: #000; color: #666; }\n';
+			css += 'body { -moz-user-select: none; user-select: none; }\n';
+			css += 'body.tape-images-mode { margin: 0; padding: 8px; background: #000; color: #666; }\n';
 			css += 'img { max-width: 100%; }\n';
 			css += '#tapeTools { position: fixed; z-index: 66000; right: 20px; top: 10px; background: #fff; box-shadow: 0 0 5px rgba(0, 0, 0, 0.5); opacity: 0.1; }\n';
 			css += '#tapeTools:hover, #tapeTools.active { opacity: 1; }\n';
