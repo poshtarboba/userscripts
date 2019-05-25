@@ -24,13 +24,13 @@
 	}
 
 	function addStyles(){
-		const THUMB_HEIGHT = '180px';  // высота миниатюры изображения
-		const THUMB_HEIGHT_LT1 = '140px';
+		const THUMB_HEIGHT = '200px';  // высота миниатюры изображения
+		const THUMB_HEIGHT_LT1 = '150px';
 		const THUMB_HEIGHT_LT2 = '110px';
 		const THUMB_HEIGHT_LT3 = '80px';
-		const THUMB_HEIGHT_GT1 = '220px';
-		const THUMB_HEIGHT_GT2 = '260px';
-		const THUMB_HEIGHT_GT3 = '300px';
+		const THUMB_HEIGHT_GT1 = '260px';
+		const THUMB_HEIGHT_GT2 = '320px';
+		const THUMB_HEIGHT_GT3 = '400px';
 		let style = document.createElement('style');
 		let css = '\n#image, video { width: auto; height: auto; max-width: calc(100vw - 320px); max-height: 98vh; }\n';
 		css += '.itape-btns span { color: #b4c7d9; cursor: pointer; }\n';
