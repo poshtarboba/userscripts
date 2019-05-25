@@ -101,7 +101,7 @@
 			css += '#tapeImages.ti-thumb-mode .img-btn { display: none; }\n';
 			css += '#tapeImages.ti-thumb-mode img.full-size ~ .img-btn { display: block; position: fixed; z-index: 35; opacity: 0.1; }\n';
 			css += '#tapeImages.ti-thumb-mode img.full-size ~ .img-btn:hover { opacity: 1; }\n';
-			css += '#pInfo { display: inline-block; padding-left: 20px; color: #333; }\n';
+			css += '#pInfo { display: inline-block; padding-left: 20px; color: #333; white-space: nowrap; }\n';
 			css += '#pInfo em { font-style: normal; }\n';
 			let style = document.createElement('style');
 			style.innerHTML = css;
