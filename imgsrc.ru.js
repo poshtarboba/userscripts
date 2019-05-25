@@ -127,12 +127,12 @@
 			if (userName) window.topLinks += '<a href="' + userHref + userName + '">User ' + userName + '</a> &nbsp;&nbsp; \n';
 			
 			let html = '<div id="tapeImages">\n<p>\n' + window.topLinks;
-			html += '<p>A, Q - prev, next image, W - change mode:\n';
+			html += 'A, Q - prev, next image, W - change mode:\n';
 			html += '<label><input type="radio" id="trm1" name="trm" checked> screen size</label>\n';
 			html += '<label><input type="radio" id="trm2" name="trm"> full size</label>\n';
 			html += '<label><input type="radio" id="trm3" name="trm"> thumb size (+ / -)</label>\n';
 			html += '<span id="pInfo">Loading images: <em id="curInfo"></em> / <em id="allInfo"></em></span>\n';
-			html += '</p>\n';
+			html += '</p>\n<p>\n';
 			document.querySelectorAll('img.big').forEach(function(img) { html += imgHTMLCode(img); });
 			getImagesPage(href, html);
 		}
@@ -150,7 +150,8 @@
 	function getImagesPage(href, html) {
 		if (href.length === 0) {
 			clearHeader();
-			document.body.innerHTML = html + '</div>\n<p>' + window.topLinks + '</p>';
+			html += '</p></div>\n<p style="text-align: center;">' + window.topLinks + '</p>';
+			document.body.innerHTML = html;
 			document.getElementById('allInfo').innerText = document.querySelectorAll('img').length;
 			document.body.classList.add('tape-images-mode');
 			document.documentElement.classList.add('smooth-scroll');
