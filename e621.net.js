@@ -156,12 +156,10 @@
 		document.head.querySelectorAll('link, script').forEach(function(tag){ tag.remove(); });
 		document.title = 'e621 - ' + document.title.replace(' - e621', '').replace('/', '');
 		document.body.innerHTML = document.getElementById('tapeImages').outerHTML;
+		document.body.classList.add('tape-images-mode');
+		document.documentElement.classList.add('smooth-scroll');
 		addTapeTools();
 		addNavKeys(); // добавляет навигацию клавишами q, a - вверх/вниз, w - переключить #fullHgh
-	}
-
-	function addCSS(){
-		
 	}
 
 	function itapeLoadNextListPages(nextListPages, linksArr){
@@ -234,6 +232,48 @@
 			img.setAttribute('src', img.dataset.src);
 			delete img.dataset.src;
 		}, rndTime());
+	}
+
+	function addTapeTools(){
+		let tapeTools = document.createElement('div');
+		tapeTools.setAttribute('id', 'tapeTools');
+		let html = '\n<span class="tt-handler"></span>\n';
+		html += '<span class="tt-mode active" id="ttm1">screen</span>\n';
+		html += '<span class="tt-mode" id="ttm2">full</span>\n';
+		html += '<span class="tt-mode" id="ttm3">thumb</span>\n';
+		html += '<span class="tt-thumb-size"><span id="thumbinc">+</span><span id="thumbdec">-</span>';
+		html += '<em id="thumbsz">0</em>\n';
+		tapeTools.innerHTML = html;
+		document.body.appendChild(tapeTools);
+		let x = localStorage.getItem('tapeToolsX');
+		let y = localStorage.getItem('tapeToolsY');
+		if (x && y) {
+			tapeTools.style.right = x;
+			tapeTools.style.top = y;
+		}
+		let ttHandler = tapeTools.querySelector('.tt-handler');
+		ttHandler.addEventListener('mousedown', ttHandlerMouseDown);
+		function ttHandlerMouseDown(e){
+			oX = e.layerX;
+			oY = e.layerY;
+			tapeTools.classList.add('active');
+			window.addEventListener('mousemove', ttHandlerMouseMove);
+			window.addEventListener('mouseup', ttHandlerMouseUp);
+		}
+		function ttHandlerMouseMove(e){
+			x = e.clientX;
+			y = e.clientY;
+			tapeTools.style.right = calcX();
+			tapeTools.style.top = y - oY + 'px';
+		}
+		function ttHandlerMouseUp(e){
+			window.removeEventListener('mousemove', ttHandlerMouseMove);
+			window.removeEventListener('mouseup', ttHandlerMouseUp);
+			tapeTools.classList.remove('active');
+			localStorage.setItem('tapeToolsX', calcX());
+			localStorage.setItem('tapeToolsY', y - oY + 'px');
+		}
+		function calcX(){ return document.body.clientWidth - x - ttHandler.clientWidth + oX + 'px'; }
 	}
 
 	function addNavKeys(){
