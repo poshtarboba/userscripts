@@ -62,12 +62,12 @@
 		css += '#tapeImages img { display: block; margin: 0 auto 20px; max-height: 98vh; }\n';
 		css += '#tapeImages.ti-full-mode img { max-height: none; }\n';
 		css += '#tapeImages.ti-thumb-mode img { display: inline-block; margin: 0 0 4px; max-height: ' + THUMB_HEIGHT + '; cursor: pointer; }\n';
-		css += '#tapeImages.ti-thumb-lt1 img { max-height: ' + THUMB_HEIGHT_LT1 + '; }\n';
-		css += '#tapeImages.ti-thumb-lt2 img { max-height: ' + THUMB_HEIGHT_LT2 + '; }\n';
-		css += '#tapeImages.ti-thumb-lt3 img { max-height: ' + THUMB_HEIGHT_LT3 + '; }\n';
-		css += '#tapeImages.ti-thumb-gt1 img { max-height: ' + THUMB_HEIGHT_GT1 + '; }\n';
-		css += '#tapeImages.ti-thumb-gt2 img { max-height: ' + THUMB_HEIGHT_GT2 + '; }\n';
-		css += '#tapeImages.ti-thumb-gt3 img { max-height: ' + THUMB_HEIGHT_GT3 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode.ti-thumb-lt1 img { max-height: ' + THUMB_HEIGHT_LT1 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode.ti-thumb-lt2 img { max-height: ' + THUMB_HEIGHT_LT2 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode.ti-thumb-lt3 img { max-height: ' + THUMB_HEIGHT_LT3 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode.ti-thumb-gt1 img { max-height: ' + THUMB_HEIGHT_GT1 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode.ti-thumb-gt2 img { max-height: ' + THUMB_HEIGHT_GT2 + '; }\n';
+		css += '#tapeImages.ti-thumb-mode.ti-thumb-gt3 img { max-height: ' + THUMB_HEIGHT_GT3 + '; }\n';
 		css += '#tapeImages.ti-thumb-mode img:not(.full-size):hover { opacity: 0.8; }\n';
 		css += '#tapeImages.ti-thumb-mode img.full-size { position: fixed; z-index: 33; left: 50%; top: 50%; transform: translate(-50%, -50%); max-height: 98vh; box-shadow: 0 0 0 2000px rgba(0, 0, 0, 0.9); }\n';
 		css += '#tapeImages .img-wrap { display: inline-block; position: relative; }\n';
@@ -368,7 +368,7 @@
 			let yPos = imgCenter(images[next]) - halfScreen;
 			window.scroll(0, yPos);
 		}
-		function imgCenter(img){ return img.clientHeight / 2 + img.offsetTop; }
+		function imgCenter(img){ return img.clientHeight / 2 + img.getBoundingClientRect().top + pageYOffset; }
 		function imgClick(){
 			if (!tapeImages.classList.contains('ti-thumb-mode')) return;
 			this.classList.toggle('full-size');
