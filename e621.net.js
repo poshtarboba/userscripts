@@ -80,6 +80,7 @@
 		css += '#tapeImages.ti-thumb-mode .img-btn { display: none; }\n';
 		css += '#tapeImages.ti-thumb-mode img.full-size ~ .img-btn { display: block; position: fixed; z-index: 35; opacity: 0.1; }\n';
 		css += '#tapeImages.ti-thumb-mode img.full-size ~ .img-btn:hover { opacity: 1; }\n';
+		css += '#itapeDown, #itapeUp, #itapeClear, #itapeInfo { display: inline-block; padding-left: 12px; white-space: nowrap; }\n';
 		style.innerHTML = css;
 		document.head.appendChild(style);
 	}
@@ -114,10 +115,10 @@
 		let poolShow = document.getElementById('pool-show');
 		if (!postList && !poolShow) return;
 		let html = '<li class="itape-btns">';
-		html += '<span id="itapeDown">▼▼▼</span>&nbsp;';
-		if (postList) html += '&nbsp;&nbsp;&nbsp;<span id="itapeUp">▲▲▲</span>&nbsp;';
-		html += '<span id="itapeClear" style="display:none;">Clear</span>&nbsp;';
-		html += '<b id="itapeInfo" style="display: none;">Loading&nbsp;<i id="itiType">next&nbsp;pages</i>:&nbsp;';
+		html += '<span id="itapeDown">▼▼▼</span>';
+		if (postList) html += '<span id="itapeUp">▲▲▲</span>';
+		html += '<span id="itapeClear" style="display:none;">Clear</span>';
+		html += '<b id="itapeInfo" style="display: none;">Loading <i id="itiType">next pages</i>:';
 		html += '<i id="itiCur">0</i>&nbsp;/&nbsp;<i id="itiTotal">0</i></b></li>';
 		let br = document.querySelector('#subnav ul > br');
 		if (br) br.remove();
