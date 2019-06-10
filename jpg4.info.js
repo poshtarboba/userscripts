@@ -53,6 +53,8 @@
 		document.getElementById('relkey').setAttribute('onmousemove', '');
 		let elem = document.getElementById('google_translate_element');
 		if (elem) elem.remove();
+		elem = document.querySelector('.goog-logo-link[href="https://translate.google.com"]');
+		if (elem) elem.parentElement.parentElement.parentElement.parentElement.remove();
 		elem = document.querySelectorAll('iframe');
 		elem.forEach(function(iframe){ iframe.remove(); });
 		elem = document.head.querySelectorAll('script');
