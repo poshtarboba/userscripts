@@ -53,7 +53,7 @@
 			let img = a.querySelector('img');
 			html += '<p><a href="' + url + '" title="' + title + '">';
 			if (img) html += '<img src="" data-src="' + img.getAttribute('src') + '" class="img-thumb" alt="#">';
-			html += '<small>' + title + '</small></a></p>';
+			html += '<small>' + title + '</small></a></p>\n';
 		});
 		html += '</div>';
 		document.body.innerHTML = html;
