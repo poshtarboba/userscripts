@@ -12,7 +12,7 @@
 		document.querySelectorAll('style, script').forEach(function(elem){ elem.remove(); });
 	}
 
-		function mainThumbsCSS(){
+	function mainThumbsCSS(){
 		let css = 'body { font-family: sans-serif; }\n';
 		css += '.controls { position: fixed; z-index: 10; left: 0; top: 0; width: 100%; margin: 0; padding: 4px 12px; background: #fff; border-bottom: 1px solid silver;}\n';
 		css += '.thumbs-list { padding-top: 40px; }\n';
@@ -60,6 +60,7 @@
 		html += '</div>';
 		div.innerHTML = html;
 		let divRm = document.createElement('div');
+		divRm.setAttribute('id', 'divRm');
 		while (document.body.children.length) {
 			divRm.appendChild(document.body.firstElementChild);
 		}
@@ -131,7 +132,10 @@
 
 	function mainThumbsLoadImg(){
 		let img = document.querySelector('.img-thumb[data-src]');
-		if (!img) return;
+		if (!img) {
+			document.getElementById('divRm').remove();
+			return;
+		}
 		img.addEventListener('error', function (){ img.classList.add('err'); });
 		img.addEventListener('loadend', function (){
 			smThumbs.innerText = +smThumbs.innerText + 1;
