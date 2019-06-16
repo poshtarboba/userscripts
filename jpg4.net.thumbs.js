@@ -88,7 +88,7 @@
 		smPages = document.getElementById('smPages');
 		smImages = document.getElementById('smImages');
 		document.getElementById('smThumbsTotal').innerText = document.querySelectorAll('.img-thumb').length;
-		document.getElementById('smPagesTotal').innerText = document.querySelectorAll('thumbs-list. a').length;;
+		document.getElementById('smPagesTotal').innerText = document.querySelectorAll('.thumbs-list a').length;;
 		mainThumbsLoadImg();
 	}
 
