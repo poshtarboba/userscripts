@@ -14,6 +14,8 @@
 
 		function mainThumbsCSS(){
 		let css = 'body { font-family: sans-serif; }\n';
+		css += '.controls { position: fixed; left: 0; top: 0; width: 100%; margin: 0; padding: 4px 12px; background: #fff; border-bottom: 1px solid silver;}\n';
+		css += '.thumbs-list { padding-top: 40px; }\n';
 		css += '.thumbs-list p { display: inline-block; margin: 4px 0; vertical-align: top; border: 1px solid #eee; }\n';
 		css += '.thumbs-list a { display: block; position: relative; min-width: 50px; height: 180px; padding-bottom: 16px; text-decoration: none; color: #bbb; }\n';
 		css += '.thumbs-list small { position: absolute; left: 0; bottom: 0; white-space: nowrap; box-sizing: border-box; padding: 2px 4px; width: 100%; overflow: hidden; font-size: 0.7em; }\n';
@@ -41,7 +43,7 @@
 	function mainThumbsRemake(){
 		if (location.href.indexOf('/tpcache/tpics.html') === -1) return;
 		let div = document.createElement('div');
-		let html = '<p><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
+		let html = '<p class="controls"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
 		html += '&nbsp;&nbsp; Thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span id="smDetails">; ';
 		html += '&nbsp;&nbsp; Pages: <span id="smPages">0</span> / <span id="smPagesTotal">0</span>; ';
