@@ -1,5 +1,17 @@
 (function(){
 
+	/*
+	сторінка дня:
+	- посилання на сторінки в стовбчик, мініатюри завантажуються справа
+	
+	прикрутити пошук:
+	- шукати по регулярці по днях;
+	- добавити можливість вибрати напрямок пошуку і дату
+	*/
+
+	// TODO: в заголовках h2 - завантаження наступної сторінки
+	// сторінка-агрегатор: з головної по черзі викачуються всі посилання по дням, створюється пошук-фільтр з тегами, теги зашифрувати (взяти внизу в links)
+
 	let smThumbs, smImages;
 
 	removeElements(); // видалити зайві елементи
@@ -14,7 +26,8 @@
 
 	function mainThumbsCSS(){
 		let css = 'body { font-family: sans-serif; }\n';
-		css += '.controls { position: fixed; z-index: 10; left: 0; top: 0; width: 100%; margin: 0; padding: 4px 12px; background: #fff; border-bottom: 1px solid silver;}\n';
+		css += 'button { cursor: pointer; }\n';
+		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; box-sizing: border-box; margin: 0; padding: 4px 12px; width: 100%; background: #fff; border-bottom: 1px solid silver;}\n';
 		css += '.thumbs-list { padding-top: 40px; }\n';
 		css += '.thumbs-list p { display: inline-block; margin: 4px 0; vertical-align: top; border: 1px solid #eee; }\n';
 		css += '.thumbs-list a { display: block; position: relative; min-width: 50px; height: 180px; padding-bottom: 16px; text-decoration: none; color: #bbb; }\n';
@@ -32,10 +45,10 @@
 		css += '.mode-more .thumbs-list p > a { float: left; margin-right: 24px; }\n';
 		css += '.mode-more .thumbs-list p span a { display: inline-block; padding: 0 4px 8px; height: auto; vertical-align: top; }\n';
 		css += '.mode-more .thumbs-list p span.err { color: red; }\n';
-		css += '.mode-more .thumbs-list p span img { height: 95px; }\n';
+		css += '.mode-more .thumbs-list p span img { height: 120px; }\n';
 		css += '.mode-more .thumbs-list p span button { padding: 16px 32px; font-size: 1.5em; cursor: pointer; }\n';
-		css += '.mode-more.mode-big-1 .thumbs-list p span img { height: 135px; }\n';
-		css += '.mode-more.mode-sml-1 .thumbs-list p span img { height: 65px; }\n';
+		css += '.mode-more.mode-big-1 .thumbs-list p span img { height: 180px; }\n';
+		css += '.mode-more.mode-sml-1 .thumbs-list p span img { height: 85px; }\n';
 		let style = document.createElement('style');
 		style.innerText = css;
 		document.head.appendChild(style);
@@ -44,7 +57,7 @@
 	function mainThumbsRemake(){
 		if (location.href.indexOf('/tpcache/tpics.html') === -1) return;
 		let div = document.createElement('div');
-		let html = '<p class="controls"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
+		let html = '<p class="tools"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
 		html += '&nbsp;&nbsp; thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span class="sm-details">; ';
 		html += '&nbsp;&nbsp; images queue: <span id="smImages">0</span> <button id="smAbort">Abort current</button></span>.</p>';
@@ -61,40 +74,12 @@
 		div.innerHTML = html;
 		let divRm = document.createElement('div');
 		divRm.setAttribute('id', 'divRm');
-		while (document.body.children.length) {
-			divRm.appendChild(document.body.firstElementChild);
-		}
+		while (document.body.children.length) divRm.appendChild(document.body.firstElementChild);
 		document.body.appendChild(div);
 		document.body.appendChild(divRm);
-		document.getElementById('showMode').addEventListener('click', function (){
-			let mode = (+document.body.dataset.mode || 0) + 1;
-			if (mode === 3) mode = 0;
-			document.body.dataset.mode = mode;
-			document.body.classList.remove('mode-big-1');
-			document.body.classList.remove('mode-sml-1');
-			if (mode === 1) document.body.classList.add('mode-big-1');
-			if (mode === 2) document.body.classList.add('mode-sml-1');
-		});
-		document.getElementById('showMore').addEventListener('click', function (){
-			this.disabled = true;
-			document.querySelectorAll('.thumbs-list p').forEach(function (p){
-				let span = document.createElement('span');
-				span.classList.add('waiting');
-				span.innerHTML = '<button>Get images</button>';
-				span.querySelector('button').addEventListener('click', function (){
-					mainThumbsLoadSubpage(span);
-				});
-				p.appendChild(span);
-			});
-			document.body.classList.add('mode-more');
-			setTimeout(mainThumbsLoadSubImg, 5000);
-			mainThumbsLoadSubpage();
-		});
-		document.getElementById('smAbort').addEventListener('click', function (){
-			if (!window.currentSubImg) return;
-			window.currentSubImg.setAttribute('src', '');
-			mainThumbsLoadSubImg();
-		});
+		document.getElementById('showMode').addEventListener('click', changeShowMode);
+		document.getElementById('showMore').addEventListener('click', showMoreClick);
+		document.getElementById('smAbort').addEventListener('click', abortClick);
 		smThumbs = document.getElementById('smThumbs');
 		smImages = document.getElementById('smImages');
 		document.getElementById('smThumbsTotal').innerText = document.querySelectorAll('.img-thumb').length;
@@ -165,25 +150,38 @@
 		delete img.dataset.src;
 	}
 
-	/*
+	function changeShowMode(){
+		let mode = (+document.body.dataset.mode || 0) + 1;
+		if (mode === 3) mode = 0;
+		document.body.dataset.mode = mode;
+		document.body.classList.remove('mode-big-1');
+		document.body.classList.remove('mode-sml-1');
+		if (mode === 1) document.body.classList.add('mode-big-1');
+		if (mode === 2) document.body.classList.add('mode-sml-1');
+	}
 
-	окрема сторінка:
-	- очистити від зайвого;
-	- кнопка завантаження зображень з наступних сторінок пагера;
-	
-	сторінка дня:
-	- посилання на сторінки в стовбчик, мініатюри завантажуються справа
-	
-	прикрутити пошук:
-	- шукати по регулярці по днях;
-	- добавити можливість вибрати напрямок пошуку і дату*/
+	function showMoreClick(){
+		this.disabled = true;
+		document.querySelectorAll('.thumbs-list p').forEach(function (p){
+			let span = document.createElement('span');
+			span.classList.add('waiting');
+			span.innerHTML = '<button>Get images</button>';
+			span.querySelector('button').addEventListener('click', function (){
+				mainThumbsLoadSubpage(span);
+			});
+			p.appendChild(span);
+		});
+		document.body.classList.add('mode-more');
+		setTimeout(mainThumbsLoadSubImg, 5000);
+		mainThumbsLoadSubpage();
+	}
 
-	
-	// TODO: в заголовках h2 - завантаження наступної сторінки
-	// добавити спінер до картинок і до сторінок
-	// сторінка-агрегатор: з головної по черзі викачуються всі посилання по дням, створюється пошук-фільтр з тегами, теги зашифрувати (взяти внизу в links)
-	// зміна висоти мініатюр зі збереженням в локалсторіджі і перевірці значення при отриманні фокуса
+	function abortClick(){
+		if (!window.currentSubImg) return;
+		window.currentSubImg.setAttribute('src', '');
+		window.currentSubImg.classList.add('err');
+		window.currentSubImg = null;
+		mainThumbsLoadSubImg();
+	}
 
-
-	
 })();

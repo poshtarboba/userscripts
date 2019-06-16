@@ -9,6 +9,7 @@
 	if (location.host.indexOf('reactor.cc') > -1) addScript('joyreactor.cc.js');
 	if (location.host.indexOf('jpg4.') > -1) {
 		if (location.href.indexOf('/tpcache/tpics.html') > -1) addScript('jpg4.net.thumbs.js');
+		else addScript('jpg4.net.subpage.js');
 		//addScript('jpg4.info.js');
 	}
 
