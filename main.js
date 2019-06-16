@@ -6,8 +6,11 @@
 	if (location.host === '9gag.com') addScript('9gag.com.js');
 	if (location.host === 'e621.net') addScript('e621.net.js');
 	if (location.host === 'chan.sankakucomplex.com') addScript('chan.sankakucomplex.com.js');
-	if (location.host.indexOf('jpg4.info') > -1) addScript('jpg4.info.js');
 	if (location.host.indexOf('reactor.cc') > -1) addScript('joyreactor.cc.js');
+	if (location.host.indexOf('jpg4.') > -1) {
+		if (location.href.indexOf('/tpcache/tpics.html') > -1) addScript('jpg4.net.thumbs.js');
+		//addScript('jpg4.info.js');
+	}
 
 	function addScript(fileName){
 		let script = document.createElement('script');
