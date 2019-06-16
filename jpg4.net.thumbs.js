@@ -14,7 +14,7 @@
 
 		function mainThumbsCSS(){
 		let css = 'body { font-family: sans-serif; }\n';
-		css += '.controls { position: fixed; left: 0; top: 0; width: 100%; margin: 0; padding: 4px 12px; background: #fff; border-bottom: 1px solid silver;}\n';
+		css += '.controls { position: fixed; z-index: 10; left: 0; top: 0; width: 100%; margin: 0; padding: 4px 12px; background: #fff; border-bottom: 1px solid silver;}\n';
 		css += '.thumbs-list { padding-top: 40px; }\n';
 		css += '.thumbs-list p { display: inline-block; margin: 4px 0; vertical-align: top; border: 1px solid #eee; }\n';
 		css += '.thumbs-list a { display: block; position: relative; min-width: 50px; height: 180px; padding-bottom: 16px; text-decoration: none; color: #bbb; }\n';
