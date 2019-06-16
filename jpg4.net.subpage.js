@@ -39,8 +39,8 @@
 		let picmain = document.getElementById('picmain');
 		if (!picmain) return;
 		let divPics = document.createElement('div');
-		div.classList.add('pic-main-list');
-		document.body.appendChild(div);
+		divPics.classList.add('pic-main-list');
+		document.body.appendChild(divPics);
 		let img;
 		while (img = picmain.querySelector('img')) {
 			img.setAttribute('title', img.getAttribute('alt'));
@@ -48,8 +48,8 @@
 			img.dataset.src = img.getAttribute('src');
 			img.setAttribute('src', '');
 			let a = document.createElement('a');
+			divPics.appendChild(a);
 			a.setAttribute('href', img.getAttribute('src'));
-			div.appendChild(a);
 			a.appendChild(img);
 		}
 		addTools();
