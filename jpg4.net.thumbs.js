@@ -47,7 +47,7 @@
 		html += '&nbsp;&nbsp; thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span class="sm-details">; ';
 		html += '&nbsp;&nbsp; pages: <span id="smPages">0</span> / <span id="smPagesTotal">0</span>; ';
-		html += '&nbsp;&nbsp; images: <span id="smImages">0</span> / <span id="smImagesTotal">0</span></span>.</p>';
+		html += '&nbsp;&nbsp; images queue: <span id="smImages">0</span></span>.</p>';
 		html += '<div class="thumbs-list">';
 		document.querySelectorAll('a').forEach(function (a){
 			let url = a.getAttribute('href').replace('jpg4.info', 'jpg4.net');
@@ -83,6 +83,7 @@
 				p.appendChild(span);
 			});
 			document.body.classList.add('mode-more');
+			setTimeout(mainThumbsLoadSubImg, 5000);
 			mainThumbsLoadSubpage();
 		});
 		smThumbs = document.getElementById('smThumbs');
@@ -95,11 +96,7 @@
 
 	function mainThumbsLoadSubpage(){
 		let span = document.querySelector('span.waiting');
-		if (!span) {
-			document.getElementById('smImagesTotal').innerText = document.querySelectorAll('.img-sub').length;
-			mainThumbsLoadSubImg();
-			return;
-		}
+		if (!span) return;
 		span.classList.remove('waiting');
 		let url = span.previousElementSibling.getAttribute('href');
 		let xhr = new XMLHttpRequest();
@@ -118,7 +115,7 @@
 					div.querySelectorAll('#picmain img').forEach(function (img){
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
-						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>';
+						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>\n';
 					});
 					span.innerHTML = html;
 				} else console.log('Error parsing page, xhr:', xhr);
@@ -146,11 +143,14 @@
 	}
 
 	function mainThumbsLoadSubImg(){
+		smImages.innerText = document.querySelectorAll('.img-sub[data-src]').length;
 		let img = document.querySelector('.img-sub[data-src]');
-		if (!img) return;
+		if (!img) {
+			setTimeout(mainThumbsLoadSubImg, 5000);
+			return;
+		}
 		img.addEventListener('error', function (){ img.classList.add('err'); });
 		img.addEventListener('loadend', function (){
-			smThumbs.innerText = +smThumbs.innerText + 1;
 			mainThumbsLoadSubImg();
 		});
 		img.setAttribute('src', img.dataset.src);
