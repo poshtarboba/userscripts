@@ -58,7 +58,13 @@
 			html += '<small>' + title + '</small></a></p>\n';
 		});
 		html += '</div>';
-		document.body.innerHTML = html;
+		div.innerHTML = html;
+		let divRm = document.createElement('div');
+		while (document.body.children.length) {
+			divRm.appendChild(document.body.firstElementChild);
+		}
+		document.body.appendChild(div);
+		document.body.appendChild(divRm);
 		document.getElementById('showMode').addEventListener('click', function (){
 			let mode = (+document.body.dataset.mode || 0) + 1;
 			if (mode === 3) mode = 0;
@@ -81,9 +87,8 @@
 		smThumbs = document.getElementById('smThumbs');
 		smPages = document.getElementById('smPages');
 		smImages = document.getElementById('smImages');
-		let n = document.querySelectorAll('.img-thumb').length;
-		document.getElementById('smThumbsTotal').innerText = n;
-		document.getElementById('smPagesTotal').innerText = n;
+		document.getElementById('smThumbsTotal').innerText = document.querySelectorAll('.img-thumb').length;
+		document.getElementById('smPagesTotal').innerText = document.querySelectorAll('thumbs-list. a').length;;
 		mainThumbsLoadImg();
 	}
 
@@ -94,6 +99,7 @@
 			mainThumbsLoadSubImg();
 			return;
 		}
+		span.classList.remove('waiting');
 		let url = span.previousElementSibling.getAttribute('href');
 		let xhr = new XMLHttpRequest();
 		xhr.addEventListener('readystatechange', function(){
@@ -111,7 +117,7 @@
 					div.querySelectorAll('#picmain img').forEach(function (img){
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
-						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="' + alt + '"></a>';
+						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>';
 					});
 					span.innerHTML = html;
 				} else console.log('Error parsing page, xhr:', xhr);
