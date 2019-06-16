@@ -1,6 +1,6 @@
 (function(){
 
-	let smThumbs, smPages, smImages;
+	let smThumbs, smImages;
 
 	removeElements(); // видалити зайві елементи
 	mainThumbsRemake(); // головна сторінка мініатюр: перероблюю під свої вимоги
@@ -27,10 +27,10 @@
 		css += '.mode-sml-1 .thumbs-list img { height: 120px; }\n';
 		css += '.sm-details { display: none; }\n';
 		css += '.mode-more .sm-details { display: inline-block; }\n';
-		css += '.mode-more .thumbs-list p { display: block; }\n';
+		css += '.mode-more .thumbs-list p { display: block; margin-bottom: 24px; }\n';
 		css += '.mode-more .thumbs-list p:after { content: ""; display: block; clear: both; }\n';
 		css += '.mode-more .thumbs-list p > a { float: left; margin-right: 24px; }\n';
-		css += '.mode-more .thumbs-list p span a { display: inline-block; padding-bottom: 0; height: auto; }\n';
+		css += '.mode-more .thumbs-list p span a { display: inline-block; padding: 0 4px 8px; height: auto; vertical-align: top; }\n';
 		css += '.mode-more .thumbs-list p span.err { color: red; }\n';
 		css += '.mode-more .thumbs-list p span img { height: 95px; }\n';
 		css += '.mode-more.mode-big-1 .thumbs-list p span img { height: 135px; }\n';
@@ -46,7 +46,6 @@
 		let html = '<p class="controls"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
 		html += '&nbsp;&nbsp; thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span class="sm-details">; ';
-		html += '&nbsp;&nbsp; pages: <span id="smPages">0</span> / <span id="smPagesTotal">0</span>; ';
 		html += '&nbsp;&nbsp; images queue: <span id="smImages">0</span></span>.</p>';
 		html += '<div class="thumbs-list">';
 		document.querySelectorAll('a').forEach(function (a){
@@ -80,6 +79,10 @@
 			document.querySelectorAll('.thumbs-list p').forEach(function (p){
 				let span = document.createElement('span');
 				span.classList.add('waiting');
+				span.innerHTML = '<button>Get images</button>';
+				span.querySelector('button').addEventListener('click', function (){
+					mainThumbsLoadSubpage(span);
+				});
 				p.appendChild(span);
 			});
 			document.body.classList.add('mode-more');
@@ -87,17 +90,12 @@
 			mainThumbsLoadSubpage();
 		});
 		smThumbs = document.getElementById('smThumbs');
-		smPages = document.getElementById('smPages');
 		smImages = document.getElementById('smImages');
 		document.getElementById('smThumbsTotal').innerText = document.querySelectorAll('.img-thumb').length;
-		document.getElementById('smPagesTotal').innerText = document.querySelectorAll('.thumbs-list a').length;;
 		mainThumbsLoadImg();
 	}
 
-	function mainThumbsLoadSubpage(){
-		let span = document.querySelector('span.waiting');
-		if (!span) return;
-		span.classList.remove('waiting');
+	function mainThumbsLoadSubpage(span){
 		let url = span.previousElementSibling.getAttribute('href');
 		let xhr = new XMLHttpRequest();
 		xhr.addEventListener('readystatechange', function(){
@@ -105,7 +103,7 @@
 			if (xhr.status !== 200) {
 				console.error('Error ' + xhr.status + ': ' + xhr.statusText);
 				span.classList.add('err');
-				span.innerText = 'Error';
+				span.innerText = 'Error xhr.status';
 			} else {
 				let html = xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/);
 				if (html.length === 2) {
@@ -115,13 +113,15 @@
 					div.querySelectorAll('#picmain img').forEach(function (img){
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
-						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>\n';
+						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>';
 					});
 					span.innerHTML = html;
-				} else console.log('Error parsing page, xhr:', xhr);
+				} else {
+					console.log('Error parsing page, xhr:', xhr);
+					span.classList.add('err');
+					span.innerText = 'Error parsing page';
+				}
 			}
-			smPages.innerText = +smPages.innerText + 1;
-			setTimeout(mainThumbsLoadSubpage, rndTime());
 		});
 		xhr.open('GET', url);
 		xhr.send();
