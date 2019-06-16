@@ -44,9 +44,9 @@
 		if (location.href.indexOf('/tpcache/tpics.html') === -1) return;
 		let div = document.createElement('div');
 		let html = '<p class="controls"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
-		html += '&nbsp;&nbsp; Thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
+		html += '&nbsp;&nbsp; thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span class="sm-details">; ';
-		html += '&nbsp;&nbsp; Pages: <span id="smPages">0</span> / <span id="smPagesTotal">0</span>; ';
+		html += '&nbsp;&nbsp; pages: <span id="smPages">0</span> / <span id="smPagesTotal">0</span>; ';
 		html += '&nbsp;&nbsp; images: <span id="smImages">0</span> / <span id="smImagesTotal">0</span></span>.</p>';
 		html += '<div class="thumbs-list">';
 		document.querySelectorAll('a').forEach(function (a){
@@ -75,7 +75,7 @@
 				span.classList.add('waiting');
 				p.appendChild(span);
 			});
-			document.body.classList.add('.mode-more');
+			document.body.classList.add('mode-more');
 			mainThumbsLoadSubpage();
 		});
 		smThumbs = document.getElementById('smThumbs');
