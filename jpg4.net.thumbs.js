@@ -1,13 +1,10 @@
 (function(){
 
-	console.log('jpg4.net.thumbs script started (waiting 3000 ms...)');
-
 	let smThumbs, smPages, smImages;
 
-	setTimeout(function (){
-		removeElements(); // видалити зайві елементи
-		mainThumbsRemake(); // головна сторінка мініатюр: перероблюю під свої вимоги
-	}, 3000);
+	removeElements(); // видалити зайві елементи
+	mainThumbsRemake(); // головна сторінка мініатюр: перероблюю під свої вимоги
+	mainThumbsCSS(); // добавляємо css
 
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 
@@ -118,7 +115,7 @@
 				} else console.log('Error parsing page, xhr:', xhr);
 			}
 			smPages.innerText = +smPages.innerText + 1;
-			mainThumbsLoadSubpage();
+			setTimeout(mainThumbsLoadSubpage, rndTime());
 		});
 		xhr.open('GET', url, false);
 		xhr.send();
