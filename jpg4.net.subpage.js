@@ -15,14 +15,14 @@
 	function removeElements(){
 		document.body.onclick = null;
 		document.body.removeAttribute('onclick');
-		document.querySelectorAll('style:not(.subpage), script, #google_translate_element').forEach(function(elem){ elem.remove(); });
+		document.querySelectorAll('link, style:not(.subpage), script, #google_translate_element').forEach(function(elem){ elem.remove(); });
 	}
 
 	function picMainCSS(){
 		let css = 'body { font-family: sans-serif; padding-top: 40px; }\n';
 		css += 'button { cursor: pointer; }\n';
-		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
-		css += '.pic-main-list a { display: inline-block; }\n';
+		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
+		css += '.pic-main-list a { display: inline-block; padding: 4px; vertical-align: top; min-width: 50px; }\n';
 		css += '.pic-main-list img { display: block; height: 180px; text-align: center; background: #eee; }\n';
 		css += '.pic-main-list img.err { background: #fcc; }\n';
 		css += '.mode-big-1 .pic-main-list img { height: 260px; }\n';
@@ -52,9 +52,11 @@
 			a.setAttribute('href', img.getAttribute('src'));
 			a.appendChild(img);
 		}
+		picmain.innerHTML = '';
+		picmain.appendChild(divPics);
 		addTools();
 		let url = location.href.replace(rxReplace, '/pic' + (pageNum(location.href) + 1) + '.html');
-		getNextPage(url, 2);
+		getNextPage(url, 4);
 	}
 
 	function changeShowMode(){
