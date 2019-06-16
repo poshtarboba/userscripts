@@ -3,8 +3,9 @@
 	const rxPageNum = /\/pic(\d+)\.html/;
 	const rxReplace = /\/pic\d+\.html/;
 
+	removeElements();
 	picMainRemake();
-	picMainCSS()
+	picMainCSS();
 	setTimeout(removeElements, 1000);
 	setTimeout(removeElements, 2000);
 	setTimeout(removeElements, 3000);
