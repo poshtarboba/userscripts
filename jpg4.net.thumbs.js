@@ -155,8 +155,10 @@
 			setTimeout(mainThumbsLoadSubImg, 5000);
 			return;
 		}
+		window.currentSubImg = img;
 		img.addEventListener('error', function (){ img.classList.add('err'); });
 		img.addEventListener('loadend', function (){
+			window.currentSubImg = null;
 			mainThumbsLoadSubImg();
 		});
 		img.setAttribute('src', img.dataset.src);
