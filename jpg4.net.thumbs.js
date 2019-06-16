@@ -25,8 +25,8 @@
 		css += '.mode-sml-1 .thumbs-list a { min-width: 40px; height: 120px; }\n';
 		css += '.mode-big-1 .thumbs-list img { height: 260px; }\n';
 		css += '.mode-sml-1 .thumbs-list img { height: 120px; }\n';
-		css += '#smDetails { display: none; }\n';
-		css += '.mode-more #smDetails { display: inline-block; }\n';
+		css += '.sm-details { display: none; }\n';
+		css += '.mode-more .sm-details { display: inline-block; }\n';
 		css += '.mode-more .thumbs-list p { display: block; }\n';
 		css += '.mode-more .thumbs-list p:after { content: ""; display: block; clear: both; }\n';
 		css += '.mode-more .thumbs-list p > a { float: left; margin-right: 24px; }\n';
@@ -45,7 +45,7 @@
 		let div = document.createElement('div');
 		let html = '<p class="controls"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
 		html += '&nbsp;&nbsp; Thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
-		html += '<span id="smDetails">; ';
+		html += '<span class="sm-details">; ';
 		html += '&nbsp;&nbsp; Pages: <span id="smPages">0</span> / <span id="smPagesTotal">0</span>; ';
 		html += '&nbsp;&nbsp; images: <span id="smImages">0</span> / <span id="smImagesTotal">0</span></span>.</p>';
 		html += '<div class="thumbs-list">';
@@ -119,7 +119,7 @@
 			smPages.innerText = +smPages.innerText + 1;
 			setTimeout(mainThumbsLoadSubpage, rndTime());
 		});
-		xhr.open('GET', url, false);
+		xhr.open('GET', url);
 		xhr.send();
 	}
 
