@@ -33,6 +33,7 @@
 		css += '.mode-more .thumbs-list p span a { display: inline-block; padding: 0 4px 8px; height: auto; vertical-align: top; }\n';
 		css += '.mode-more .thumbs-list p span.err { color: red; }\n';
 		css += '.mode-more .thumbs-list p span img { height: 95px; }\n';
+		css += '.mode-more .thumbs-list p span button { padding: 16px 32px; font-size: 1.5em; cursor: pointer; }\n';
 		css += '.mode-more.mode-big-1 .thumbs-list p span img { height: 135px; }\n';
 		css += '.mode-more.mode-sml-1 .thumbs-list p span img { height: 65px; }\n';
 		let style = document.createElement('style');
@@ -46,7 +47,7 @@
 		let html = '<p class="controls"><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
 		html += '&nbsp;&nbsp; thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span class="sm-details">; ';
-		html += '&nbsp;&nbsp; images queue: <span id="smImages">0</span></span>.</p>';
+		html += '&nbsp;&nbsp; images queue: <span id="smImages">0</span> <button id="smAbort">Abort current</button></span>.</p>';
 		html += '<div class="thumbs-list">';
 		document.querySelectorAll('a').forEach(function (a){
 			let url = a.getAttribute('href').replace('jpg4.info', 'jpg4.net');
@@ -88,6 +89,11 @@
 			document.body.classList.add('mode-more');
 			setTimeout(mainThumbsLoadSubImg, 5000);
 			mainThumbsLoadSubpage();
+		});
+		document.getElementById('smAbort').addEventListener('click', function (){
+			if (!window.currentSubImg) return;
+			window.currentSubImg.setAttribute('src', '');
+			mainThumbsLoadSubImg();
 		});
 		smThumbs = document.getElementById('smThumbs');
 		smImages = document.getElementById('smImages');
