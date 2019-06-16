@@ -12,7 +12,9 @@
 	setTimeout(removeElements, 10000);
 
 	function removeElements(){
-		document.querySelectorAll('table, style:not(.subpage), script').forEach(function(elem){ elem.remove(); });
+		document.body.onclick = null;
+		document.body.removeAttribute('onclick');
+		document.querySelectorAll('style:not(.subpage), script, #google_translate_element').forEach(function(elem){ elem.remove(); });
 	}
 
 	function picMainCSS(){
@@ -24,14 +26,7 @@
 		css += '.pic-main-list img.err { background: #fcc; }\n';
 		css += '.mode-big-1 .pic-main-list img { height: 260px; }\n';
 		css += '.mode-sml-1 .pic-main-list img { height: 120px; }\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
+		//css += ' {}\n';
 		let style = document.createElement('style');
 		style.classList.add('subpage');
 		style.innerText = css;
