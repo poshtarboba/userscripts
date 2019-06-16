@@ -43,7 +43,7 @@
 
 	function mainThumbsRemake(){
 		if (location.href.indexOf('/tpcache/tpics.html') === -1) return;
-		let div document.createElement('div');
+		let div = document.createElement('div');
 		let html = '<p><button id="showMode">Mode</button> &nbsp;&nbsp; <button id="showMore">Show more</button> ';
 		html += '&nbsp;&nbsp; Thumbs: <span id="smThumbs">0</span> / <span id="smThumbsTotal">0</span>';
 		html += '<span id="smDetails">; ';
