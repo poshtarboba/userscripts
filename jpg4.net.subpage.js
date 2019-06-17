@@ -30,9 +30,6 @@
 		css += '.mode-sml-1 .pic-main-list img { height: 120px; }\n';
 		css += '.lang { margin: 0; padding: 0; list-style: none; font-size: 0.8em; }\n';
 		css += '.lang li { display: inline-block; }\n';
-		css += ' {}\n';
-		css += ' {}\n';
-		css += ' {}\n';
 		//css += ' {}\n';
 		let style = document.createElement('style');
 		style.classList.add('subpage');
