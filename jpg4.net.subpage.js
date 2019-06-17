@@ -15,11 +15,12 @@
 	function removeElements(){
 		document.body.onclick = null;
 		document.body.removeAttribute('onclick');
-		document.querySelectorAll('link, style:not(.subpage), script, #google_translate_element').forEach(function(elem){ elem.remove(); });
+		document.querySelectorAll('link, style:not(.subpage), script, #relkey ul.lang').forEach(function(elem){ elem.remove(); });
+		document.querySelectorAll('#google_translate_element, #goog-gt-tt, .goog-te-spinner-pos').forEach(function(elem){ elem.remove(); });
 	}
 
 	function picMainCSS(){
-		let css = 'body { font-family: sans-serif; padding-top: 40px; }\n';
+		let css = 'body { font-family: sans-serif; padding-top: 24px; }\n';
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
 		css += '.pic-main-list a { display: inline-block; padding: 4px; vertical-align: top; min-width: 50px; }\n';
@@ -27,6 +28,11 @@
 		css += '.pic-main-list img.err { background: #fcc; }\n';
 		css += '.mode-big-1 .pic-main-list img { height: 260px; }\n';
 		css += '.mode-sml-1 .pic-main-list img { height: 120px; }\n';
+		css += '.lang { margin: 0; padding: 0; list-style: none; font-size: 0.8em; }\n';
+		css += '.lang li { display: inline-block; }\n';
+		css += ' {}\n';
+		css += ' {}\n';
+		css += ' {}\n';
 		//css += ' {}\n';
 		let style = document.createElement('style');
 		style.classList.add('subpage');
@@ -55,6 +61,7 @@
 		picmain.innerHTML = '';
 		picmain.appendChild(divPics);
 		addTools();
+		remakeMenu();
 		let url = location.href.replace(rxReplace, '/pic' + (pageNum(location.href) + 1) + '.html');
 		getNextPage(url, 4);
 	}
@@ -135,6 +142,14 @@
 		});
 		xhr.open('GET', url);
 		xhr.send();
+	}
+
+	function remakeMenu(){
+		let lang = document.querySelector('.lang');
+		lang.parentElement.removeAttribute('align');
+		document.querySelectorAll('.sites li').forEach(function (li){ lang.appendChild(li); });
+		document.querySelector('.sites').remove();
+		lang.querySelectorAll('[style]').forEach(function (elem){ elem.removeAttribute('style'); });
 	}
 
 })();
