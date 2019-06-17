@@ -46,13 +46,14 @@
 		document.body.appendChild(divPics);
 		let img;
 		while (img = picmain.querySelector('img')) {
+			let src = img.getAttribute('src');
 			img.setAttribute('title', img.getAttribute('alt'));
 			img.setAttribute('alt', '#');
-			img.dataset.src = img.getAttribute('src');
+			img.dataset.src = src;
 			img.setAttribute('src', '');
 			let a = document.createElement('a');
 			divPics.appendChild(a);
-			a.setAttribute('href', img.getAttribute('src'));
+			a.setAttribute('href', src);
 			a.appendChild(img);
 		}
 		picmain.innerHTML = '';
