@@ -63,10 +63,10 @@
 			img.setAttribute('alt', '#');
 			img.dataset.src = src;
 			img.setAttribute('src', '');
-			let a = document.createElement('a');
-			divPics.appendChild(a);
-			a.setAttribute('href', src);
-			a.appendChild(img);
+			let span = document.createElement('span');
+			span.innerHTML = '<a href="' + src + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
+			divPics.appendChild(span);
+			span.querySelector('a').appendChild(img);
 		}
 		picmain.innerHTML = '';
 		picmain.appendChild(divPics);
@@ -144,6 +144,7 @@
 						let span = document.createElement('span');
 						let html = '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="';
 						html += alt + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
+						span.innerHTML = html;
 						divPics.appendChild(span);
 						span.querySelector('.remove').addEventListener('click', removeImg);
 						span.querySelector('.restore').addEventListener('click', restoreImg);
