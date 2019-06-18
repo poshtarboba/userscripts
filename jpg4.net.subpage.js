@@ -1,5 +1,7 @@
 (function(){
 
+	// при видаленні картинки видаляти і посилання
+
 	// переробити при старті: формувати HTML і засунути в picmain
 	// дозавантаження всіх сторінок
 	// кнопка видалення еррорнутих зображень
@@ -30,7 +32,7 @@
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
 		css += '.pic-main-list span { position: relative; display: inline-block; margin: 4px; }\n';
-		css += '.pic-main-list span button { position: absolute; z-index: 5; right: 0; top: 0; padding: 8px; opacity: 0; }\n';
+		css += '.pic-main-list span button { position: absolute; z-index: 5; right: 0; top: 0; padding: 4px 8px; opacity: 0; }\n';
 		css += '.pic-main-list span:hover button { opacity: 0.8; }\n';
 		css += '.pic-main-list span button:hover { opacity: 1; }\n';
 		css += '.pic-main-list span button.restore { display: none; }\n';
@@ -72,6 +74,7 @@
 			divPics.appendChild(span);
 			span.querySelector('a').appendChild(img);
 		}
+		picmain.removeAttribute('align');
 		picmain.innerHTML = '';
 		picmain.appendChild(divPics);
 		addTools();
