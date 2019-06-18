@@ -29,7 +29,7 @@
 		let css = 'body { font-family: sans-serif; padding-top: 24px; }\n';
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
-		css += '.pic-main-list span {}\n';
+		css += '.pic-main-list span { position: relative; }\n';
 		css += '.pic-main-list span button { position: absolute; riht: 0; top: 0; padding: 8px; opacity: 0; }\n';
 		css += '.pic-main-list span:hover button { opacity: 0.8; }\n';
 		css += '.pic-main-list span button.restore { display: none; }\n';
