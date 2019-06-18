@@ -67,6 +67,8 @@
 			img.setAttribute('src', '');
 			let span = document.createElement('span');
 			span.innerHTML = '<a href="' + src + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
+			span.querySelector('.remove').addEventListener('click', removeImg);
+			span.querySelector('.restore').addEventListener('click', restoreImg);
 			divPics.appendChild(span);
 			span.querySelector('a').appendChild(img);
 		}
