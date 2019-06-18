@@ -14,9 +14,9 @@
 
 	let smThumbs, smImages;
 
-	removeElements(); // видалити зайві елементи
-	mainThumbsRemake(); // головна сторінка мініатюр: перероблюю під свої вимоги
-	mainThumbsCSS(); // добавляємо css
+	removeElements();
+	mainThumbsRemake();
+	mainThumbsCSS();
 
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 
@@ -66,7 +66,7 @@
 			let url = a.getAttribute('href').replace('jpg4.info', 'jpg4.net');
 			let title = a.getAttribute('title') || '';
 			let img = a.querySelector('img');
-			html += '<p><a href="' + url + '" title="' + title + '">';
+			html += '<p><a href="' + url + '" title="' + title + '" target="_blank">';
 			if (img) html += '<img src="" data-src="' + img.getAttribute('src') + '" class="img-thumb" alt="#">';
 			html += '<small>' + title + '</small></a></p>\n';
 		});
@@ -104,7 +104,7 @@
 					div.querySelectorAll('#picmain img').forEach(function (img){
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
-						html += '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>';
+						html += '<a href="' + src + '" target="_blank"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a>';
 					});
 					span.innerHTML = html;
 				} else {

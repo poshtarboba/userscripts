@@ -1,5 +1,9 @@
 (function(){
 
+	// переробити при старті: формувати HTML і засунути в picmain
+	// дозавантаження всіх сторінок
+	// кнопка видалення еррорнутих зображень
+
 	const rxPageNum = /\/pic(\d+)\.html/;
 	const rxReplace = /\/pic\d+\.html/;
 
@@ -12,6 +16,8 @@
 	setTimeout(removeElements, 5000);
 	setTimeout(removeElements, 10000);
 
+	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
+
 	function removeElements(){
 		document.body.onclick = null;
 		document.body.removeAttribute('onclick');
@@ -23,6 +29,12 @@
 		let css = 'body { font-family: sans-serif; padding-top: 24px; }\n';
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
+		css += '.pic-main-list span {}\n';
+		css += '.pic-main-list span button { position: absolute; riht: 0; top: 0; padding: 8px; opacity: 0; }\n';
+		css += '.pic-main-list span:hover button { opacity: 0.8; }\n';
+		css += '.pic-main-list span button.restore { display: none; }\n';
+		css += '.pic-main-list span.removed button.remove { display: none; }\n';
+		css += '.pic-main-list span.removed button.restore { display: block; }\n';
 		css += '.pic-main-list a { display: inline-block; padding: 4px; vertical-align: top; min-width: 50px; }\n';
 		css += '.pic-main-list img { display: block; height: 180px; text-align: center; background: #eee; }\n';
 		css += '.pic-main-list img.err { background: #fcc; }\n';
@@ -37,8 +49,8 @@
 		document.head.appendChild(style);
 	}
 
-	
 	function picMainRemake(){
+		document.title = 'jpg4 ' + document.title;
 		let picmain = document.getElementById('picmain');
 		if (!picmain) return;
 		let divPics = document.createElement('div');
@@ -104,12 +116,12 @@
 		img.setAttribute('src', img.dataset.src);
 		delete img.dataset.src;
 	}
-	
+
 	function pageNum(url){
 		let res = url.match(rxPageNum);
 		return res.length === 2 ? +res[1] : 1;
 	}
-	
+
 	function getNextPage(url, counter){
 		if (counter < 1) {
 			getImg();
@@ -129,14 +141,18 @@
 					div.querySelectorAll('#picmain img').forEach(function (img){
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
-						let a = document.createElement('a');
-						a.setAttribute('href', src);
-						a.innerHTML = '<img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '">';
-						divPics.appendChild(a);
+						let span = document.createElement('span');
+						let html = '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="';
+						html += alt + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
+						divPics.appendChild(span);
+						span.querySelector('.remove').addEventListener('click', removeImg);
+						span.querySelector('.restore').addEventListener('click', restoreImg);
 					});
 				} else console.log('Error parsing page, xhr:', xhr);
 			}
-			getNextPage(url.replace(rxReplace, '/pic' + (pageNum(url) + 1) + '.html'), counter - 1);
+			setTimeout(function (){
+				getNextPage(url.replace(rxReplace, '/pic' + (pageNum(url) + 1) + '.html'), counter - 1);
+			}, rndTime());
 		});
 		xhr.open('GET', url);
 		xhr.send();
@@ -148,6 +164,22 @@
 		document.querySelectorAll('.sites li').forEach(function (li){ lang.appendChild(li); });
 		document.querySelector('.sites').remove();
 		lang.querySelectorAll('[style]').forEach(function (elem){ elem.removeAttribute('style'); });
+	}
+
+	function removeImg(){
+		let span = this.parentElement;
+		span.classList.add('removed');
+		let img = span.querySelector('img');
+		let restore = this.nextElementSibling;
+		restore.dataset.src = img.getAttribute('src') || img.dataset.src;
+		restore.dataset.title = img.getAttribute('title');
+		img.remove();
+	}
+
+	function restoreImg(){
+		let span = this.parentElement;
+		span.classList.remove('removed');
+		span.querySelector('a').innerHTML = '<img class="img-sub" src="' + this.dataset.src + '" alt="#" title="' + this.dataset.title + '">'
 	}
 
 })();
