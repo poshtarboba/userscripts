@@ -1,9 +1,11 @@
 (function(){
 
 	// при видаленні картинки видаляти і посилання
+	// видаляти еррорнуті
+	// нумерація завантажень
 
 	// переробити при старті: формувати HTML і засунути в picmain
-	// дозавантаження всіх сторінок
+	// дозавантаження всіх сторінок (при старті грузити 3 перших сторінки)
 	// кнопка видалення еррорнутих зображень
 
 	const rxPageNum = /\/pic(\d+)\.html/;
@@ -21,17 +23,23 @@
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 
 	function removeElements(){
-		document.body.onclick = null;
-		document.body.removeAttribute('onclick');
-		document.querySelectorAll('link, style:not(.subpage), script, #relkey ul.lang').forEach(function(elem){ elem.remove(); });
+		document.querySelectorAll('iframe, link, style:not(.subpage), script, noscript, meta[name], meta[class], #relkey ul.lang').forEach(function(elem){ elem.remove(); });
+		document.querySelectorAll('[align]').forEach(function(elem){ elem.removeAttribute('align'); });
 		document.querySelectorAll('#google_translate_element, #goog-gt-tt, .goog-te-spinner-pos').forEach(function(elem){ elem.remove(); });
+		['onclick', 'onmouseover', 'onmousemove', 'onmouseout'].forEach(function (ev){
+			document.querySelectorAll('[' + ev + ']').forEach(function(elem){
+				elem.removeAttribute(ev);
+				elem[ev] = null;
+			});
+		});
+		
 	}
 
 	function picMainCSS(){
 		let css = 'body { font-family: sans-serif; padding-top: 24px; }\n';
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
-		css += '.pic-main-list span { position: relative; display: inline-block; margin: 4px; }\n';
+		css += '.pic-main-list span { position: relative; display: inline-block; margin: 4px; min-width: 32px; }\n';
 		css += '.pic-main-list span button { position: absolute; z-index: 5; right: 0; top: 0; padding: 4px 8px; opacity: 0; }\n';
 		css += '.pic-main-list span:hover button { opacity: 0.8; }\n';
 		css += '.pic-main-list span button:hover { opacity: 1; }\n';
@@ -49,7 +57,7 @@
 		//css += ' {}\n';
 		let style = document.createElement('style');
 		style.classList.add('subpage');
-		style.innerText = css;
+		style.innerHTML = css;
 		document.head.appendChild(style);
 	}
 
@@ -74,7 +82,6 @@
 			divPics.appendChild(span);
 			span.querySelector('a').appendChild(img);
 		}
-		picmain.removeAttribute('align');
 		picmain.innerHTML = '';
 		picmain.appendChild(divPics);
 		addTools();
