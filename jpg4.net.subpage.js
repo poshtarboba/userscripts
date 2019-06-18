@@ -76,7 +76,7 @@
 			img.dataset.src = src;
 			img.setAttribute('src', '');
 			let span = document.createElement('span');
-			span.innerHTML = '<a href="' + src + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
+			span.innerHTML = '<a href="' + src + '" target="_blank"></a> <button class="remove">x</button> <button class="restore">R</button>';
 			span.querySelector('.remove').addEventListener('click', removeImg);
 			span.querySelector('.restore').addEventListener('click', restoreImg);
 			divPics.appendChild(span);
@@ -87,7 +87,7 @@
 		addTools();
 		remakeMenu();
 		let url = location.href.replace(rxReplace, '/pic' + (pageNum(location.href) + 1) + '.html');
-		getNextPage(url, 4);
+		getNextPage(url, 9);
 	}
 
 	function changeShowMode(){
@@ -156,8 +156,7 @@
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
 						let span = document.createElement('span');
-						let html = '<a href="' + src + '"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="';
-						html += alt + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
+						let html = '<a href="' + src + '" target="_blank"><img class="img-sub" src="" data-src="' + src + '" alt="#" title="' + alt + '"></a> <button class="remove">x</button> <button class="restore">R</button>';
 						span.innerHTML = html;
 						divPics.appendChild(span);
 						span.querySelector('.remove').addEventListener('click', removeImg);
