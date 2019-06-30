@@ -3,6 +3,8 @@
 	// при видаленні картинки видаляти і посилання
 	// видаляти еррорнуті
 	// нумерація завантажень
+	// аборт по таймауту 10 сек.
+	// кнопка restore з'являється справа в стовбчик і зникає через 15 сек.
 
 	// переробити при старті: формувати HTML і засунути в picmain
 	// дозавантаження всіх сторінок (при старті грузити 3 перших сторінки)
@@ -23,6 +25,7 @@
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 
 	function removeElements(){
+		document.body.removeAttribute('style');
 		document.querySelectorAll('iframe, link, style:not(.subpage), script, noscript, meta[name], meta[class], #relkey ul.lang').forEach(function(elem){ elem.remove(); });
 		document.querySelectorAll('[align]').forEach(function(elem){ elem.removeAttribute('align'); });
 		document.querySelectorAll('#google_translate_element, #goog-gt-tt, .goog-te-spinner-pos').forEach(function(elem){ elem.remove(); });
@@ -36,7 +39,7 @@
 	}
 
 	function picMainCSS(){
-		let css = 'body { font-family: sans-serif; padding-top: 24px; }\n';
+		let css = '\nbody { font-family: sans-serif; padding-top: 24px; }\n';
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; margin: 0; padding: 4px 12px; width: 100%; box-sizing: border-box; background: #fff; border-bottom: 1px solid silver; }\n';
 		css += '.pic-main-list span { position: relative; display: inline-block; margin: 4px; min-width: 32px; }\n';

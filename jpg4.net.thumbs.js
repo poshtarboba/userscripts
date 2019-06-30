@@ -25,7 +25,7 @@
 	}
 
 	function mainThumbsCSS(){
-		let css = 'body { font-family: sans-serif; }\n';
+		let css = '\nbody { font-family: sans-serif; }\n';
 		css += 'button { cursor: pointer; }\n';
 		css += '.tools { position: fixed; z-index: 10; left: 0; top: 0; box-sizing: border-box; margin: 0; padding: 4px 12px; width: 100%; background: #fff; border-bottom: 1px solid silver;}\n';
 		css += '.thumbs-list { padding-top: 40px; }\n';
@@ -50,7 +50,7 @@
 		css += '.mode-more.mode-big-1 .thumbs-list p span img { height: 180px; }\n';
 		css += '.mode-more.mode-sml-1 .thumbs-list p span img { height: 85px; }\n';
 		let style = document.createElement('style');
-		style.innerText = css;
+		style.innerHTML = css;
 		document.head.appendChild(style);
 	}
 
