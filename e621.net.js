@@ -154,8 +154,10 @@
 	}
 
 	function itapeClearClick(){
+		let pageNum = location.href.match(/index\/(\d+)\//);
+		pageNum = pageNum ? ' ' + pageNum[1] : '';
 		document.head.querySelectorAll('link, script').forEach(function(tag){ tag.remove(); });
-		document.title = 'e621 - ' + document.title.replace(' - e621', '').replace('/', '');
+		document.title = 'e621 - ' + document.title.replace(' - e621', '').replace('/', '') + pageNum;
 		document.body.innerHTML = document.getElementById('tapeImages').outerHTML;
 		document.body.classList.add('tape-images-mode');
 		document.documentElement.classList.add('smooth-scroll');

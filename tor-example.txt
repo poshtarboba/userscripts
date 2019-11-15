@@ -1,2 +1,0 @@
-document.body.appendChild(document.createElement('script'))
-.setAttribute('http://poshtarboba.github.io/userscripts/SCRIPT_NAME.js');
