@@ -278,6 +278,11 @@
 		function calcX(){ return document.body.clientWidth - x - ttHandler.clientWidth + oX + 'px'; }
 	}
 
+	window.addEventListener('keydown', function (e){
+		if (e.keyCode !== 27) return;
+		document.querySelectorAll('.full-size').forEach(e => e.classList.remove('full-size'));
+	});
+
 	function addNavKeys(){
 		let tapeImages = document.getElementById('tapeImages');
 		let radioMode1 = document.getElementById('trm1');
