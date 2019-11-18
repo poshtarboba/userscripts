@@ -5,6 +5,12 @@
 	loadAllImages(); // загрузить все картинки если в ссылке есть &showall=true
 	loadPreviews(); // кнопка загрузки превюх
 
+	window.addEventListener('keydown', function (e){
+		if (e.keyCode !== 27) return;
+		document.querySelectorAll('.full-size').forEach(e => e.classList.remove('full-size'));
+	});
+
+
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 	function rndTimeTh(){ return Math.floor(Math.random() * 3000) + 1500; }
 	function getBody(xhr){ return xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/); }
