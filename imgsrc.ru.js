@@ -4,6 +4,9 @@
 	linkToAllImages(); // добавить ссылку на все фото альбома
 	loadAllImages(); // загрузить все картинки если в ссылке есть &showall=true
 	loadPreviews(); // кнопка загрузки превюх
+	document.querySelectorAll('th').forEach(function (th){
+		if (th.innerText === 'photo') th.setAttribute('width', 60);
+	});
 
 	window.addEventListener('keydown', function (e){
 		if (e.keyCode !== 27) return;
