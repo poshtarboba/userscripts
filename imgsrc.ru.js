@@ -191,13 +191,15 @@
 			document.getElementById('pInfo').innerText = 'All images was loaded (' + document.querySelectorAll('img').length + ')';
 			return;
 		};
-		img.addEventListener('load', function (){
+		img.addEventListener('load', eventFun);
+		img.addEventListener('error', eventFun);
+		img.setAttribute('src', img.dataset.src);
+		delete img.dataset.src;
+		function eventFun(){
 			let span = document.getElementById('curInfo');
 			span.innerText = +span.innerText + 1;
 			setTimeout(loadNextImage, rndTime());
-		});
-		img.setAttribute('src', img.dataset.src);
-		delete img.dataset.src;
+		}
 	}
 
 	function clearHeader(){
