@@ -118,11 +118,11 @@
 		let html = '<button id="showMode">Mode</button> &nbsp;&nbsp; ';
 		html += '<button id="imgAbort">Abort current image</button> &nbsp;&nbsp; ';
 		html += '<button id="imgRemoveErr">Remove errors</button> &nbsp;&nbsp; ';
-		p.innerHTML = 
+		p.innerHTML = html;
 		document.body.appendChild(p);
 		document.getElementById('showMode').addEventListener('click', changeShowMode);
 		document.getElementById('imgAbort').addEventListener('click', abortClick);
-		document.getElementById('imgAbort').addEventListener('click', removeErr);
+		document.getElementById('imgRemoveErr').addEventListener('click', removeErr);
 	}
 
 	function getImg(){
