@@ -128,6 +128,7 @@
 		img.addEventListener('error', function (){ img.classList.add('err'); });
 		img.addEventListener('loadend', function (){
 			window.currentSubImg = null;
+			if (this.getAttribute('src').indexOf('/jpg4usnet.png')) this.parentElement.remove();
 			getImg();
 		});
 		img.setAttribute('src', img.dataset.src);
