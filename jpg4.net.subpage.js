@@ -151,12 +151,15 @@
 			if (xhr.status !== 200) {
 				console.error('Error ' + xhr.status + ': ' + xhr.statusText);
 			} else {
-				console.log('debug154:', xhr);
-				let html = xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/);
-				if (html.length === 2) {
+				let html;
+				if (xhr.responseText) {
+					html = xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/);
+					if (!html) html = xhr.responseText;
+				}
+				if (html.length > 1) {
 					let divPics = document.querySelector('.pic-main-list');
 					let div = document.createElement('div');
-					div.innerHTML = html[1];
+					div.innerHTML = html.length === 2 ? html[1] : html;
 					div.querySelectorAll('#picmain img').forEach(function (img){
 						let src = img.getAttribute('src');
 						let alt = img.getAttribute('alt');
