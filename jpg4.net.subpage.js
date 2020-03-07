@@ -148,7 +148,7 @@
 		let xhr = new XMLHttpRequest();
 		xhr.addEventListener('readystatechange', function(){
 			if (xhr.readyState !== 4) return;
-			if (xhr.status !== 200 || ) {
+			if (xhr.status !== 200) {
 				console.error('Error ' + xhr.status + ': ' + xhr.statusText);
 			} else {
 				console.log('debug154:', xhr);
