@@ -63,7 +63,7 @@
 		html += '&nbsp;&nbsp; images queue: <span id="smImages">0</span> <button id="smAbort">Abort current</button></span>.</p>';
 		html += '<div class="thumbs-list">';
 		document.querySelectorAll('a').forEach(function (a){
-			let url = a.getAttribute('href').replace('jpg4.info', 'jpg4.net');
+			//let url = a.getAttribute('href').replace('jpg4.info', 'jpg4.net');
 			let title = a.getAttribute('title') || '';
 			let img = a.querySelector('img');
 			html += '<p><a href="' + url + '" title="' + title + '" target="_blank">';
