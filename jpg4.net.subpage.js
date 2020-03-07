@@ -115,10 +115,14 @@
 	function addTools(){
 		let p = document.createElement('p');
 		p.classList.add('tools');
-		p.innerHTML = '<button id="showMode">Mode</button> &nbsp;&nbsp; <button id="imgAbort">Abort current image</button>';
+		let html = '<button id="showMode">Mode</button> &nbsp;&nbsp; ';
+		html += '<button id="imgAbort">Abort current image</button> &nbsp;&nbsp; ';
+		html += '<button id="imgRemoveErr">Remove errors</button> &nbsp;&nbsp; ';
+		p.innerHTML = 
 		document.body.appendChild(p);
 		document.getElementById('showMode').addEventListener('click', changeShowMode);
 		document.getElementById('imgAbort').addEventListener('click', abortClick);
+		document.getElementById('imgAbort').addEventListener('click', removeErr);
 	}
 
 	function getImg(){
@@ -202,6 +206,12 @@
 		let span = this.parentElement;
 		span.classList.remove('removed');
 		span.querySelector('a').innerHTML = '<img class="img-sub" src="' + this.dataset.src + '" alt="#" title="' + this.dataset.title + '">'
+	}
+	
+	function removeErr(){
+		document.querySelectorAll('img.err').forEach(img => {
+			img.parentElement.parentElement.remove();
+		});
 	}
 
 })();
