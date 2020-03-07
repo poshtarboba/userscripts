@@ -156,7 +156,7 @@
 					html = xhr.responseText.match(/<body.*?>([\s\S]*)<\/body>/);
 					if (!html) html = xhr.responseText;
 				}
-				if (html.length > 1) {
+				if (html && html.length > 1) {
 					let divPics = document.querySelector('.pic-main-list');
 					let div = document.createElement('div');
 					div.innerHTML = html.length === 2 ? html[1] : html;
