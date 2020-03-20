@@ -198,7 +198,7 @@
 
 	function itapeLoadPages(links, html){
 		if (links.length === 0) {
-			document.getElementById('content').innerHTML += html + '</div>';
+			document.getElementById('page').innerHTML += html + '</div>';
 			document.getElementById('itiType').innerText = 'images';
 			document.getElementById('itiCur').innerText = 0;
 			document.getElementById('itiTotal').innerText = document.querySelectorAll('#tapeImages img').length;
