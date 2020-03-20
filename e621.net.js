@@ -134,15 +134,15 @@
 	}
 
 	function itapeBtnClick(){
-		let list = document.getElementById('post-list');
-		if (!list) list = document.getElementById('pool-show');
+		let list = document.getElementById('posts');
+		if (!list) list = document.getElementById('c-pools');
 		let itapeDown = document.getElementById('itapeDown');
 		let itapeUp = document.getElementById('itapeUp');
 		if (itapeDown) itapeDown.style.display = 'none';
 		if (itapeUp) itapeUp.style.display = 'none';
 		document.getElementById('itapeInfo').style.display = '';
 		let linksArr = [];
-		let links = list.querySelectorAll('.thumb a');
+		let links = list.querySelectorAll('.post-preview a');
 		let down = this.getAttribute('id') === 'itapeDown';
 		let i = down ? 0 : links.length - 1;
 		while (i >= 0 && i < links.length) {
@@ -150,8 +150,8 @@
 			i += down ? 1 : -1;
 		}
 		let nextListPages = [];
-		if (list.getAttribute('id') === 'pool-show') {
-			let pagers = document.querySelectorAll('#paginator a:not(.prev_page):not(.next_page)');
+		if (list.getAttribute('id') === 'c-pools') {
+			let pagers = document.querySelectorAll('#paginator a:not(#paginator-next):not(#paginator-prev)');
 			pagers.forEach(function (a){ nextListPages.push(a.href); });
 		}
 		document.getElementById('itiTotal').innerText = nextListPages.length;
