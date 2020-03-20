@@ -95,11 +95,16 @@
 	}
 
 	function rareTags(){
-		let li = document.querySelectorAll('#tag-sidebar li');
+		let li = document.querySelectorAll('#tag-box li');
 		li.forEach(function(li){
 			let span = li.querySelector('.post-count');
 			if (!span) return;
-			let n = parseInt(span.innerText);
+			let n = span.innerText;
+			let lastChar = n.substr(-1);
+			if (lastChar === 'k' || lastChar === 'm') {
+				n = parseFloat(n.slice(0, -1));
+				n = lastChar === 'k' ? n * 1000 : n * 1000000;
+			} else n = parseInt(n);
 			let alpha = 0;
 			if (n < 50) alpha = 0.15;
 			else if (n < 200) alpha = 0.12;
@@ -111,8 +116,8 @@
 	}
 
 	function createItapeButtons(){
-		let postList = document.getElementById('post-list');
-		let poolShow = document.getElementById('pool-show');
+		let postList = document.getElementById('posts');
+		let poolShow = document.getElementById('c-pools');
 		if (!postList && !poolShow) return;
 		let html = '<li class="itape-btns">';
 		html += '<span id="itapeDown">▼▼▼</span>';
@@ -120,9 +125,9 @@
 		html += '<span id="itapeClear" style="display:none;">Clear</span>';
 		html += '<b id="itapeInfo" style="display: none;">Loading <i id="itiType">next pages</i>:';
 		html += '<i id="itiCur">0</i>&nbsp;/&nbsp;<i id="itiTotal">0</i></b></li>';
-		let br = document.querySelector('#subnav ul > br');
-		if (br) br.remove();
-		document.querySelector('#subnav ul').innerHTML += html;
+		//let br = document.querySelector('#subnav ul > br');
+		//if (br) br.remove();
+		document.querySelector('#nav menu:not(.main)').innerHTML += html;
 		document.getElementById('itapeDown').onclick = itapeBtnClick;
 		if (postList) document.getElementById('itapeUp').onclick = itapeBtnClick;
 		document.getElementById('itapeClear').onclick = itapeClearClick;
