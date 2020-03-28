@@ -12,6 +12,8 @@
 	// TODO: в заголовках h2 - завантаження наступної сторінки
 	// сторінка-агрегатор: з головної по черзі викачуються всі посилання по дням, створюється пошук-фільтр з тегами, теги зашифрувати (взяти внизу в links)
 
+	console.log('run jpg4.net.thumbs.js');
+
 	let smThumbs, smImages;
 
 	removeElements();
@@ -21,6 +23,14 @@
 	function rndTime(){ return Math.floor(Math.random() * 500) + 250; }
 
 	function removeElements(){
+		let eventObjs = document.querySelectorAll('[onmousemove], [oncontextmenu]');
+		console.log('>>> count of eventObjs: ', eventObjs.length);
+		eventObjs.forEach(e => {
+			console.log('>>> remove events');
+			e.removeAttribute('onmousemove');
+			e.removeAttribute('oncontextmenu');
+		});
+
 		document.querySelectorAll('style, script').forEach(function(elem){ elem.remove(); });
 	}
 
@@ -52,14 +62,6 @@
 		let style = document.createElement('style');
 		style.innerHTML = css;
 		document.head.appendChild(style);
-		
-		let eventObjs = document.querySelectorAll('[onmousemove], [oncontextmenu]');
-		console.log('>>> count of eventObjs: ', eventObjs.length);
-		eventObjs.forEach(e => {
-			console.log('>>> remove events');
-			e.removeAttribute('onmousemove');
-			e.removeAttribute('oncontextmenu');
-		});
 	}
 
 	function mainThumbsRemake(){
