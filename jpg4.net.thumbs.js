@@ -52,6 +52,12 @@
 		let style = document.createElement('style');
 		style.innerHTML = css;
 		document.head.appendChild(style);
+		
+		document.querySelectorAll('[onmousemove], [oncontextmenu]').forEach(e => {
+			console.log('remove img-events');
+			e.removeAttribute('onmousemove');
+			e.removeAttribute('oncontextmenu');
+		});
 	}
 
 	function mainThumbsRemake(){
