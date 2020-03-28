@@ -53,8 +53,10 @@
 		style.innerHTML = css;
 		document.head.appendChild(style);
 		
-		document.querySelectorAll('[onmousemove], [oncontextmenu]').forEach(e => {
-			console.log('remove img-events');
+		let eventObjs = document.querySelectorAll('[onmousemove], [oncontextmenu]');
+		console.log('>>> count of eventObjs: ', eventObjs.length);
+		.forEach(e => {
+			console.log('>>> remove events');
 			e.removeAttribute('onmousemove');
 			e.removeAttribute('oncontextmenu');
 		});
