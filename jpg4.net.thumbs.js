@@ -55,7 +55,7 @@
 		
 		let eventObjs = document.querySelectorAll('[onmousemove], [oncontextmenu]');
 		console.log('>>> count of eventObjs: ', eventObjs.length);
-		.forEach(e => {
+		eventObjs.forEach(e => {
 			console.log('>>> remove events');
 			e.removeAttribute('onmousemove');
 			e.removeAttribute('oncontextmenu');
