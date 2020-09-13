@@ -215,7 +215,7 @@
 	function loadPreviews(){
 		let th;
 		document.querySelectorAll('th').forEach((tag) => {
-			if (tag.innerText.toLowerCase() === 'album name') a = tag;
+			if (tag.innerText.toLowerCase() === 'album name') th = tag;
 		});
 		if (!th) return;
 		th.innerHTML += '&nbsp;|&nbsp;<span id="showTh" style="color: #c00; cursor: pointer;">show thumbs</span>';
