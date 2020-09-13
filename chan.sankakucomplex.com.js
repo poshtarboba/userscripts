@@ -10,8 +10,10 @@ console.log('chan:before done');
 (function() {
 	
 	addUserCSS(); // добавити користувацькі стилі
-	scrollToImage(); // проскролить до картинки
+	scrollToImage(); // проскролити до картинки
 	recommendationsNoTargetBlank(); // позабирати таргет-бланки у рекомендованих
+	loadRecomendated(3); // завантажити рекомендовані (три рази)
+	selectByCount(); // якщо є список вибору сортування - встановлювати на count
 	
 	function addUserCSS() {
 		let html = '#image { position:relative; width:auto !important; height: auto !important; ';
@@ -36,5 +38,31 @@ console.log('chan:before done');
 			a.removeAttribute('target');
 		});
 	}
+	
+	function selectByCount(){
+		let select = document.querySelector('select#order');
+		if (!select) return;
+		let option = select.querySelector('option:selected');
+		if (option) option.selected = false;
+		option = select.querySelector('option[value="count"]');
+		if (option) option.selected = true;
+	}
+	
+	function loadRecomendated(n){
+		// якщо є кнопка "далі"
+		let url = '/post/recommend/15477209?page=';
+		for (let i = 1; i <= n; i++) {
+			setTimeout(function (){
+				fetch(url + (i + 2), { method: 'GET' })
+				.then(resp => resp.text())
+				.then(resp => {
+					console.log(resp);
+					
+				});
+			}, i * 3000);
+		}
+	}
+	//new Ajax.Updater('recommendations', '/post/recommend/15477209?page=2', {asynchronous:true, evalScripts:true, method:'get'}); return false;"
 
 })();
+

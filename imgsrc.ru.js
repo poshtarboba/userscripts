@@ -50,8 +50,10 @@
 		document.querySelectorAll('a[href*="/main/tape.php"]').forEach(function(a) {
 			let href = a.getAttribute('href');
 			let span = document.createElement('span');
-			span.innerHTML = '&nbsp;|&nbsp;<a id="saLnk" href="' + href + '&showall=true">all</a>';
-			a.parentElement.insertBefore(span, a.nextElementSibling);
+			span.innerHTML = '&nbsp;|&nbsp;<a href="' + href + '&showall=true">all</a>';
+			let td = a.parentElement;
+			td.style.whiteSpace = 'nowrap';
+			td.insertBefore(span, a.nextElementSibling);
 		});
 	}
 
@@ -211,16 +213,21 @@
 	}
 
 	function loadPreviews(){
-		let a = document.querySelector('[href*="/main/switch.php?show=pix"]');
-		if (!a) return;
-		let th = a.parentElement;
-		th.innerHTML += ' <span id="showTh" style="color: #c00; cursor: pointer;">show thumbs</span>';
+		let th;
+		document.querySelectorAll('th').forEach((tag) => {
+			if (tag.innerText.toLowerCase() === 'album name') a = tag;
+		});
+		if (!th) return;
+		th.innerHTML += '&nbsp;|&nbsp;<span id="showTh" style="color: #c00; cursor: pointer;">show thumbs</span>';
 		let btn = document.getElementById('showTh');
 		btn.onclick = function (){
 			btn.style.display = 'none';
 			th.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
 				let a = td.firstElementChild;
-				if (a && a.tagName === 'A') a.classList.add('waiting-for-thumbs');
+				if (a && a.tagName === 'A') {
+					a.classList.add('waiting-for-thumbs');
+					a.querySelector('img').remove();
+				}
 			});
 			loadNextThumbs();
 		};
