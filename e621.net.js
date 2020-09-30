@@ -411,5 +411,5 @@
 			if (zoom < 0) tapeImages.classList.add('ti-thumb-lt' + -zoom);
 		}
 	}
-
+	
 })();
