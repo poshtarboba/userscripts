@@ -5,7 +5,7 @@
 	if (location.host.indexOf('.google.') > -1 && location.search.indexOf('tbm=isch') > -1) addScript('google-images.js');
 	if (location.host === 'imgsrc.ru') addScript('imgsrc.ru.js');
 	if (location.host === '9gag.com') addScript('9gag.com.js');
-	if (location.host === 'e621.net') addScript('e621.net.js');
+	//if (location.host === 'e621.net') addScript('e621.net.js');
 	if (location.host === 'chan.sankakucomplex.com') addScript('chan.sankakucomplex.com.js');
 	if (location.host.indexOf('reactor.cc') > -1) addScript('joyreactor.cc.js');
 	if (location.host.indexOf('jpg4.') > -1) {
