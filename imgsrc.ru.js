@@ -50,8 +50,10 @@
 		document.querySelectorAll('a[href*="/main/tape.php"]').forEach(function(a) {
 			let href = a.getAttribute('href');
 			let span = document.createElement('span');
-			span.innerHTML = '&nbsp;|&nbsp;<a id="saLnk" href="' + href + '&showall=true">all</a>';
-			a.parentElement.insertBefore(span, a.nextElementSibling);
+			span.innerHTML = '&nbsp;|&nbsp;<a href="' + href + '&showall=true">all</a>';
+			let td = a.parentElement;
+			td.style.whiteSpace = 'nowrap';
+			td.insertBefore(span, a.nextElementSibling);
 		});
 	}
 
@@ -224,7 +226,10 @@
 			span.style.display = 'none';
 			th.parentElement.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
 				let a = td.firstElementChild;
-				if (a && a.tagName === 'A') a.classList.add('waiting-for-thumbs');
+				if (a && a.tagName === 'A') {
+					a.classList.add('waiting-for-thumbs');
+					a.querySelector('img').remove();
+				}
 			});
 			loadNextThumbs();
 		};

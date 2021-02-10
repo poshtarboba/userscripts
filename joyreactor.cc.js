@@ -1,12 +1,12 @@
-/* hide share buttons */
 
 (function (){
+	/* hide share buttons */
 	setTimeout(function(){
 		document.querySelectorAll('.share_buttons a').forEach(function(a){ a.style.display = 'none'; });
 	}, 3000);
 
-	/* rate buttons for best comments */
 	if (jQuery) {
+		/* rate buttons for best comments */
 		let $ = jQuery;
 		let css = '.c-vote-plus, .c-vote-minus { font-size: 120%; margin-left: 4px; cursor: pointer; display: inline-block; vertical-align: middle; opacity: 0.6; }\n';
 		css += '.c-vote-plus { margin-left: 12px; }\n.c-vote-plus:hover, .c-vote-minus:hover { opacity: 1; }';
@@ -31,6 +31,3 @@
 	}
 
 })();
-
-
-
