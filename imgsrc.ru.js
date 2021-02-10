@@ -211,14 +211,18 @@
 	}
 
 	function loadPreviews(){
-		let a = document.querySelector('[href*="/main/switch.php?show=pix"]');
+		let a = document.querySelector('[href*="sortby=name"]');
 		if (!a) return;
 		let th = a.parentElement;
-		th.innerHTML += ' <span id="showTh" style="color: #c00; cursor: pointer;">show thumbs</span>';
-		let btn = document.getElementById('showTh');
-		btn.onclick = function (){
-			btn.style.display = 'none';
-			th.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
+		let span = document.createElement('span');
+		span.innerText = 'show thumbs';
+		span.style.color = '#c00';
+		span.style.marginLeft = '12px';
+		span.style.cursor = 'pointer;
+		th.appendChild('span')
+		span.onclick = function (){
+			span.style.display = 'none';
+			th.parentElement.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
 				let a = td.firstElementChild;
 				if (a && a.tagName === 'A') a.classList.add('waiting-for-thumbs');
 			});
