@@ -220,7 +220,7 @@
 		span.innerText = 'show thumbs';
 		span.style.color = '#c00';
 		span.style.marginLeft = '12px';
-		span.style.cursor = 'pointer;
+		span.style.cursor = 'pointer';
 		th.appendChild('span')
 		span.onclick = function (){
 			span.style.display = 'none';
