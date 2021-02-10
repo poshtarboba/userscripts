@@ -221,7 +221,7 @@
 		span.style.color = '#c00';
 		span.style.marginLeft = '12px';
 		span.style.cursor = 'pointer';
-		th.appendChild('span')
+		th.appendChild(span)
 		span.onclick = function (){
 			span.style.display = 'none';
 			th.parentElement.parentElement.parentElement.querySelectorAll('td:first-child').forEach(function (td){
