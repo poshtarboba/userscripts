@@ -42,7 +42,7 @@
 		document.head.appendChild(style);
 		let logo = document.querySelector('.topbar_inner .top_logo');
 		addButton('Show all images', showAllImages);
-		addButton('Clear LocalStorage (' + calcLocalStorage() + ')', clearLocalStorage);
+		if (location.href.indexOf('/user/') > -1) addButton('Clear LocalStorage (' + calcLocalStorage() + ')', clearLocalStorage);
 		function addButton(text, clickFn){
 			let btn = document.createElement('button');
 			btn.innerText = text;
