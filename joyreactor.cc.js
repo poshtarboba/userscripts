@@ -1,12 +1,17 @@
-
 (function (){
-	/* hide share buttons */
-	setTimeout(function(){
-		document.querySelectorAll('.share_buttons a').forEach(function(a){ a.style.display = 'none'; });
+	
+	setTimeout(() => {
+		rateButtonsForBestComments();
+		hideShareButtons();
+		addTopButtons();
 	}, 3000);
+	
+	function hideShareButtons(){
+		document.querySelectorAll('.share_buttons a').forEach(a => a.style.display = 'none');
+	}
 
-	if (jQuery) {
-		/* rate buttons for best comments */
+	function rateButtonsForBestComments(){
+		if (!jQuery) return console.warn('PBUS: jQuery not found;');
 		let $ = jQuery;
 		let css = '.c-vote-plus, .c-vote-minus { font-size: 120%; margin-left: 4px; cursor: pointer; display: inline-block; vertical-align: middle; opacity: 0.6; }\n';
 		css += '.c-vote-plus { margin-left: 12px; }\n.c-vote-plus:hover, .c-vote-minus:hover { opacity: 1; }';
@@ -27,6 +32,50 @@
 			localStorage.setItem('comment_' + commentId, 'true');
 			let url = '/comment_vote/add/' + commentId + '/' + $btn.attr('data-vote');
 			span.load(url, 'token=' + token, function(){ $('.qtip').hide(); });
+		}
+	}
+	
+	function addTopButtons(){
+		let css = '.topbar_inner button { margin-left: 8px; cursor: pointer; }\n';
+		css += 'img.fully { display: inline-block; padding: 0 4px 4px 0; width: auto; height: 200px; }\n';
+		let style = document.createElement('style');
+		style.innerHTML = css;
+		document.head.appendChild(style);
+		let logo = document.querySelector('.topbar_inner .top_logo');
+		addButton('Show all images', showAllImages);
+		addButton('Clear LocalStorage (' + calcLocalStorage() + ')', clearLocalStorage);
+		function addButton(text, clickFn){
+			let btn = document.createElement('button');
+			btn.innerText = text;
+			logo.parentElement.insertBefore(btn, logo.nextElementSibling);
+			btnShowAllImg.addEventListener('click', clickFn);
+			return btn;
+		}
+		function calcLocalStorage(){
+			let n = 0;
+			for (key in localStorage) {
+				if (key.indexOf('comment_') === 0) n++;
+			}
+			return n;
+		}
+		function clearLocalStorage(){
+			this.remove();
+			for (key in localStorage) {
+				if (key.indexOf('comment_') === 0) localStorage.removeItem(key);
+			}
+		}
+		function showAllImages(){
+			this.remove();
+			let images = [];
+			// images without link
+			document.querySelectorAll('.post_content .image img').forEach(img => images.push(img.getAttribute('src')));
+			// images with link
+			document.querySelectorAll('.post_content .prettyPhotoLink').forEach(link => images.push(link.href));
+			// gif
+			document.querySelectorAll('.post_content .video_gif_source').forEach(link => images.push(link.href));
+			let html = '';
+			images.forEach(src => html += '<img class="fully" src="' + src + '" alt="img">\n');
+			document.body.innerHTML = html;
 		}
 	}
 
