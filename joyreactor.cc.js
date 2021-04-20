@@ -66,12 +66,12 @@
 		function showAllImages(){
 			this.remove();
 			let images = [];
-			// images without link
-			document.querySelectorAll('.post_content .image img').forEach(img => images.push(img.getAttribute('src')));
-			// images with link
-			document.querySelectorAll('.post_content .prettyPhotoLink').forEach(link => images.push(link.href));
 			// gif
 			document.querySelectorAll('.post_content .video_gif_source').forEach(link => images.push(link.href));
+			// images without link
+			document.querySelectorAll('.post_content .image > img').forEach(img => images.push(img.getAttribute('src')));
+			// images with link
+			document.querySelectorAll('.post_content .prettyPhotoLink').forEach(link => images.push(link.href));
 			// new body
 			const style = 'display: inline-block; padding: 2px; width: auto; height: 200px;';
 			let html = '';
