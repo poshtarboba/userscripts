@@ -72,17 +72,18 @@
 			document.querySelectorAll('.post_content .image > img').forEach(img => images.push(img.getAttribute('src')));
 			// images with link
 			document.querySelectorAll('.post_content .prettyPhotoLink').forEach(link => images.push(link.href));
+			// new title
+			let title = 'Joy - ' + document.querySelector('h1').innerText;
+			let num = location.pathname;
+			num = +num.substr(num.lastIndexOf('/') + 1);
+			if (!isNaN(num)) title += ' ' + add0(num, 4);
+			document.title = title;
 			// new body
 			const style = 'display: inline-block; padding: 2px; width: auto; height: 200px;';
 			let html = '';
 			images.forEach(src => html += '<img src="' + src + '" alt="img" style="' + style + '">\n');
 			document.body.innerHTML = html;
 			document.querySelectorAll('script, link').forEach(e => e.remove());
-			let title = 'Joy - ' + jydocument.querySelector('h1').innerText;
-			let num = location.pathname;
-			num = +num.substr(num.lastIndexOf('/') + 1);
-			if (!isNaN(num)) title += ' ' + add0(num, 4);
-			document.title = title;
 		}
 	}
 	
