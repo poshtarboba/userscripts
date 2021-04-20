@@ -78,7 +78,18 @@
 			images.forEach(src => html += '<img src="' + src + '" alt="img" style="' + style + '">\n');
 			document.body.innerHTML = html;
 			document.querySelectorAll('script, link').forEach(e => e.remove());
+			let title = 'Joy - ' + jydocument.querySelector('h1').innerText;
+			let num = location.pathname;
+			num = +num.substr(num.lastIndexOf('/') + 1);
+			if (!isNaN(num)) title += ' ' + add0(num, 4);
+			document.title = title;
 		}
+	}
+	
+	function add0(x, n = 2){
+		x = x + '';
+		while (x.length < n) x = '0' + x;
+		return x;
 	}
 
 })();
