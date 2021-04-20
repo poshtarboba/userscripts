@@ -37,7 +37,6 @@
 	
 	function addTopButtons(){
 		let css = '.topbar_inner button { margin: 8px 0 0 8px; padding: 4px 12px; height: auto; cursor: pointer; }\n';
-		css += 'img.fully { display: inline-block; padding: 0 4px 4px 0; width: auto; height: 200px; }\n';
 		let style = document.createElement('style');
 		style.innerHTML = css;
 		document.head.appendChild(style);
@@ -73,9 +72,12 @@
 			document.querySelectorAll('.post_content .prettyPhotoLink').forEach(link => images.push(link.href));
 			// gif
 			document.querySelectorAll('.post_content .video_gif_source').forEach(link => images.push(link.href));
+			// new body
+			const style = 'display: inline-block; padding: 2px; width: auto; height: 200px;';
 			let html = '';
-			images.forEach(src => html += '<img class="fully" src="' + src + '" alt="img">\n');
+			images.forEach(src => html += '<img src="' + src + '" alt="img" style="' + style + '">\n');
 			document.body.innerHTML = html;
+			document.querySelectorAll('script, style').forEach(e => e.remove());
 		}
 	}
 
