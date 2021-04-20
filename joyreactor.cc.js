@@ -36,7 +36,7 @@
 	}
 	
 	function addTopButtons(){
-		let css = '.topbar_inner button { margin-left: 8px; cursor: pointer; }\n';
+		let css = '.topbar_inner button { margin: 8px 0 0 8px; padding: 4px 12px; height: auto; cursor: pointer; }\n';
 		css += 'img.fully { display: inline-block; padding: 0 4px 4px 0; width: auto; height: 200px; }\n';
 		let style = document.createElement('style');
 		style.innerHTML = css;
@@ -48,7 +48,7 @@
 			let btn = document.createElement('button');
 			btn.innerText = text;
 			logo.parentElement.insertBefore(btn, logo.nextElementSibling);
-			btnShowAllImg.addEventListener('click', clickFn);
+			btn.addEventListener('click', clickFn);
 			return btn;
 		}
 		function calcLocalStorage(){
