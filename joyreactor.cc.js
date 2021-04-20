@@ -77,7 +77,7 @@
 			let html = '';
 			images.forEach(src => html += '<img src="' + src + '" alt="img" style="' + style + '">\n');
 			document.body.innerHTML = html;
-			document.querySelectorAll('script, style').forEach(e => e.remove());
+			document.querySelectorAll('script, link').forEach(e => e.remove());
 		}
 	}
 
