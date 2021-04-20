@@ -36,7 +36,7 @@
 	}
 	
 	function addTopButtons(){
-		let css = '.topbar_inner button { margin: 8px 0 0 8px; padding: 4px 12px; height: auto; cursor: pointer; }\n';
+		let css = '.topbar_inner button { margin: 8px 0 0 8px; padding: 4px 12px; height: auto; font-weight: normal; text-transform: none; }\n';
 		let style = document.createElement('style');
 		style.innerHTML = css;
 		document.head.appendChild(style);
