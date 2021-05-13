@@ -88,9 +88,7 @@
 		}
 		function hateEverybody(){
 			this.remove();
-			document.querySelectorAll('.comment .vote-minus').forEach((btn, i) => {
-				setTimeout(() => btn.dispatchEvent(new Event('click')), (i + 1) * 1000);
-			});
+			document.querySelectorAll('.comment .vote-minus').forEach((btn, i) => setTimeout(btn.click, (i + 1) * 1000));
 		}
 	}
 	
