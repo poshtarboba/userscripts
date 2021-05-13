@@ -43,6 +43,7 @@
 		let logo = document.querySelector('.topbar_inner .top_logo');
 		addButton('Show all images', showAllImages);
 		if (location.href.indexOf('/user/') > -1) addButton('Clear LocalStorage (' + calcLocalStorage() + ')', clearLocalStorage);
+		if (location.href.indexOf('/post/') > -1) addButton('Hate everybody!', hateEverybody);
 		function addButton(text, clickFn){
 			let btn = document.createElement('button');
 			btn.innerText = text;
@@ -84,6 +85,12 @@
 			images.forEach(src => html += '<img src="' + src + '" alt="img" style="' + style + '">\n');
 			document.body.innerHTML = html;
 			document.querySelectorAll('script, link').forEach(e => e.remove());
+		}
+		function hateEverybody(){
+			this.remove();
+			document.querySelectorAll('.comment .vote-minus').forEach((btn, i) => {
+				setTimeout(() => btn.dispatchEvent(new Event('click')), (i + 1) * 1000);
+			});
 		}
 	}
 	
