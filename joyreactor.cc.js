@@ -90,8 +90,8 @@
 			this.remove();
 			document.querySelectorAll('.comment .vote-minus').forEach((btn, i) => {
 				//if (i > 9) return;
-				setTimeout((btn) => btn.click(), (i + 1) * 3000, btn));
-			}
+				setTimeout((btn) => btn.click(), (i + 1) * 3000, btn);
+			});
 		}
 	}
 	
